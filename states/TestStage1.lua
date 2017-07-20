@@ -127,6 +127,91 @@ local events = {
     end
   },
   {
+    time = 3.1,
+    action = function()
+      SceneManager:spawnEnemy(enemies.challenging1)
+      return SceneManager:spawnEnemy(enemies.challenging2)
+    end
+  },
+  {
+    time = 4,
+    action = function()
+      SceneManager:spawnEnemy({
+        pos = Vector(30, -10),
+        text = "(╬`益´)",
+        width = 60,
+        move = function(self, dt)
+          self.pos = self.pos + 50 * Vector(0, 1) * dt
+        end,
+        shoot = function(self)
+          for i = 1, 3 do
+            Bullet({
+              pos = self.pos + Vector(20 * i, 0),
+              speed = 400,
+              dir = Vector(1, 0),
+              char = "*"
+            })
+          end
+        end
+      })
+      return SceneManager:spawnEnemy({
+        pos = Vector(570, -10),
+        text = "(`益´╬)",
+        width = 60,
+        move = function(self, dt)
+          self.pos = self.pos + 50 * Vector(0, 1) * dt
+        end,
+        shoot = function(self)
+          for i = 1, 3 do
+            Bullet({
+              pos = self.pos - Vector(20 * i, 0),
+              speed = 400,
+              dir = Vector(-1, 0),
+              char = "*"
+            })
+          end
+        end
+      })
+    end
+  },
+  {
+    time = 5,
+    action = function()
+      SceneManager:spawnEnemy({
+        pos = Vector(30, -10),
+        text = "(╬`益´)",
+        width = 60,
+        move = function(self, dt)
+          self.pos = self.pos + 500 * Vector(0, 1) * dt
+        end,
+        shoot = function(self)
+          return Bullet({
+            pos = self.pos + Vector(10, 0),
+            speed = 400,
+            dir = Vector(1, 0),
+            char = "*"
+          })
+        end
+      })
+      return SceneManager:spawnEnemy({
+        pos = Vector(570, -10),
+        text = "(`益´╬)",
+        width = 60,
+        move = function(self, dt)
+          self.pos = self.pos + 500 * Vector(0, 1) * dt
+        end,
+        shoot = function(self)
+          return Bullet({
+            pos = self.pos - Vector(10, 0),
+            speed = 400,
+            dir = Vector(-1, 0),
+            char = "*"
+          })
+        end
+      })
+    end
+  },
+  {
     time = 10,
     action = function()
       return SceneManager:spawnBoss({
@@ -163,7 +248,7 @@ do
       SceneManager:draw()
       return lovelog.print("FPS: " .. love.timer.getFPS())
     end,
-    quit = function(self)
+    leave = function(self)
       return music:stop()
     end
   }

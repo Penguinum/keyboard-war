@@ -103,6 +103,67 @@ events = {
 
   }
   {
+    time: 3.1, action: ->
+      SceneManager\spawnEnemy enemies.challenging1
+      SceneManager\spawnEnemy enemies.challenging2
+  }
+  {
+    time: 4, action: ->
+      SceneManager\spawnEnemy {
+        pos: Vector(30, -10), text: "(╬`益´)", width: 60
+        move: (dt) =>
+          @pos = @pos + 50 * Vector(0, 1) * dt
+        shoot: =>
+          for i = 1, 3 do
+            Bullet{
+              pos: @pos + Vector(20 * i, 0)
+              speed: 400 --math.random(50, 100)
+              dir: Vector(1, 0)
+              char: "*"
+            }
+      }
+      SceneManager\spawnEnemy {
+        pos: Vector(570, -10), text: "(`益´╬)", width: 60
+        move: (dt) =>
+          @pos = @pos + 50 * Vector(0, 1) * dt
+        shoot: =>
+          for i = 1, 3 do
+            Bullet{
+              pos: @pos - Vector(20 * i, 0)
+              speed: 400 --math.random(50, 100)
+              dir: Vector(-1, 0)
+              char: "*"
+            }
+      }
+  }
+  {
+    time: 5, action: ->
+      SceneManager\spawnEnemy {
+        pos: Vector(30, -10), text: "(╬`益´)", width: 60
+        move: (dt) =>
+          @pos = @pos + 500 * Vector(0, 1) * dt
+        shoot: =>
+          Bullet{
+            pos: @pos + Vector(10, 0)
+            speed: 400 --math.random(50, 100)
+            dir: Vector(1, 0)
+            char: "*"
+          }
+      }
+      SceneManager\spawnEnemy {
+        pos: Vector(570, -10), text: "(`益´╬)", width: 60
+        move: (dt) =>
+          @pos = @pos + 500 * Vector(0, 1) * dt
+        shoot: =>
+          Bullet{
+            pos: @pos - Vector(10, 0)
+            speed: 400 --math.random(50, 100)
+            dir: Vector(-1, 0)
+            char: "*"
+          }
+      }
+  }
+  {
     time: 10
     action: ->
       SceneManager\spawnBoss {
@@ -143,5 +204,5 @@ class Stage1
     lovelog.print "FPS: " .. love.timer.getFPS!
     -- love.graphics.print
 
-  quit: =>
+  leave: =>
     music\stop!
