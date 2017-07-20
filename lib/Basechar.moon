@@ -9,7 +9,7 @@ class Enemy
   height: 15
   text: "x_x"
   hitbox_radius: 3
-  color: {50, 150, 50}
+  color: {100, 255, 100}
 
   new: =>
     @hitbox = HC\circle @pos.x, @pos.y, @hitbox_radius
