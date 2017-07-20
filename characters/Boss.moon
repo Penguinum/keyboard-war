@@ -99,7 +99,6 @@ walk = Mode{
     elseif @pos.x > config.scene_width
       @pos.x = config.scene_width
       @direction = "left"
-    print "total time", tt
     if tt > 4
       @mode = "rage"
 

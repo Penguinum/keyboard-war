@@ -128,7 +128,6 @@ local walk = Mode({
       self.pos.x = config.scene_width
       self.direction = "left"
     end
-    print("total time", tt)
     if tt > 4 then
       self.mode = "rage"
     end
