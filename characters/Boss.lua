@@ -31,6 +31,7 @@ local death = Mode({
 local appear = Mode({
   id = "appear",
   init_func = function(self)
+    signal.emit("boss_hp", self.max_hp, self.hp)
     self.diff_pos = self.spawn_pos - self.income_pos
   end,
   update_func = function(self, dt, tt)
