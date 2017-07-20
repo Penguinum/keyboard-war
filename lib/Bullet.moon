@@ -7,11 +7,15 @@ HC = require "HCWorld"
 import graphics from love
 
 BulletManager =
+  id: 0
   size: 0
   last: 0
   bullets: {}
   addBullet: (b) =>
     @size += 1
+    b.id = @id
+    b.hitbox.id = @id
+    @id += 1
     @bullets[b] = true
 
   removeBullet: (b) =>
@@ -31,6 +35,10 @@ BulletManager =
     for b, _ in pairs(@bullets)
       b\remove!
 
+  removeBulletWithHitbox: (hbox) =>
+    hbox.bullet\remove!
+
+
 signal.register "player_meets_bullet", ->
   BulletManager\removeAllBullets!
 
@@ -49,6 +57,7 @@ class Bullet
                            @pos.x + r, @pos.y + r,
                            @pos.x - r, @pos.y + r
     @hitbox.type = args.type or "evil"
+    @hitbox.bullet = @
     @color = args.color or {0, 0, 255}
 
     BulletManager\addBullet @

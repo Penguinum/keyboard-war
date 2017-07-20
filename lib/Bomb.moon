@@ -1,9 +1,11 @@
 -- lovelog = require "lib.lovelog"
 -- vector = require "hump.vector"
--- colorize = require "lib.colorize"
+colorize = require "lib.colorize"
 -- signal = require "hump.signal"
 --config = require "config"
 HC = require "HCWorld"
+import BulletManager from require "lib.Bullet"
+import graphics from love
 
 BombManager =
   size: 0
@@ -14,34 +16,51 @@ BombManager =
     @bombs[b] = true
 
   removeBomb: (b) =>
-    @bullets[b] = nil
+    @bombs[b] = nil
     @size -= 1
 
   update: (dt) =>
-    for b, _ in pairs @bullets
+    for b, _ in pairs @bombs
+      if b.lifetime > b.max_lifetime
+        b\remove!
       b\update dt
 
   draw: () =>
     -- lovelog.print "Bomb count: " .. @size
-    for b, _ in pairs @bullets
+    for b, _ in pairs @bombs
       b\draw!
 
-  removeAllBullets: =>
-    for b, _ in pairs(@bullets)
+  removeAllBombs: =>
+    for b, _ in pairs(@bombs)
       b\remove!
 
-class Bullet
+class Bomb
   new: (args) =>
     @pos = args.pos
-    @rad = 30
-    @char = args.char or "*"
+    @rad = args.rad
     @hitbox = HC\circle(@pos.x, @pos.y, @rad)
+    @lifetime = 0
+    @max_lifetime = args.lifetime or 0
+    @color = {0, 0, 255}
+
+    BombManager\addBomb @
 
   update: (dt) =>
+    @lifetime += dt
+    if next(HC\collisions(@hitbox))
+      for k, v in pairs HC\collisions(@hitbox)
+        if k.type == "evil"
+          print "EVILBOOLET", k
+          BulletManager\removeBulletWithHitbox(k)
 
-  draw: (dt) =>
+  draw: =>
+    colorize @color, -> graphics.circle "line", @pos.x, @pos.y, @rad
 
-  {
-    :BombManager
-    :Bullet
-  }
+  remove: =>
+    HC\remove @hitbox
+    BombManager\removeBomb @
+
+{
+  :BombManager,
+  :Bomb
+}

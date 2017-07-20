@@ -7,11 +7,15 @@ local HC = require("HCWorld")
 local graphics
 graphics = love.graphics
 local BulletManager = {
+  id = 0,
   size = 0,
   last = 0,
   bullets = { },
   addBullet = function(self, b)
     self.size = self.size + 1
+    b.id = self.id
+    b.hitbox.id = self.id
+    self.id = self.id + 1
     self.bullets[b] = true
   end,
   removeBullet = function(self, b)
@@ -33,6 +37,9 @@ local BulletManager = {
     for b, _ in pairs(self.bullets) do
       b:remove()
     end
+  end,
+  removeBulletWithHitbox = function(self, hbox)
+    return hbox.bullet:remove()
   end
 }
 signal.register("player_meets_bullet", function()
@@ -76,6 +83,7 @@ do
         self.hitbox = HC:polygon(self.pos.x - r, self.pos.y - r - 7, self.pos.x + r, self.pos.y - r - 7, self.pos.x + r, self.pos.y + r, self.pos.x - r, self.pos.y + r)
       end
       self.hitbox.type = args.type or "evil"
+      self.hitbox.bullet = self
       self.color = args.color or {
         0,
         0,
