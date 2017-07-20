@@ -20,6 +20,10 @@ local menu = {
     text = "Return to main menu",
     action = function()
       SceneManager.clear()
+      MusicManager.sendEventToTag({
+        tag = "Stage1",
+        event = "stop"
+      })
       return StateManager.switch("MainMenu")
     end
   },
