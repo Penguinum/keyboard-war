@@ -52,7 +52,12 @@ local walk = Mode({
       self.text = self.texts[self.direction]
     end
     if math.random() > 0.96 then
-      self:shoot()
+      local player_pos = SceneManager:getPlayerPosition()
+      for d1 = -1, 1 do
+        for d2 = -1, 1 do
+          self:shoot(self.pos.x + d1 * 10, self.pos.y + 10, player_pos.x + d2 * 10, player_pos.y)
+        end
+      end
     end
     if self.direction == "left" then
       vec.x = -1
@@ -174,15 +179,12 @@ do
         })
       end
     end,
-    shoot = function(self)
-      local x, y = self.pos.x, self.pos.y + 20
-      print("VECTORZ", SceneManager:getPlayerPosition(), self.pos)
-      local dir = SceneManager:getPlayerPosition() - self.pos
+    shoot = function(self, x, y, tx, ty)
+      local dir = Vector(tx, ty) - Vector(x, y)
       local bullet = Bullet({
         pos = Vector(x, y),
-        speed = math.random(30, 200),
+        speed = 200,
         dir = dir:normalized(),
-        char = "9",
         type = "evil"
       })
       bullet.update = function(self, dt)
