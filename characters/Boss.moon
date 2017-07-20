@@ -49,6 +49,7 @@ death = Mode{
           rad: 5
         }
         @circle_bullets_da += 1
+      love.audio.newSource("sfx/boss_explosion.ogg")\play!
 
     elseif tt > 7
       StateManager.switch "YouWin"

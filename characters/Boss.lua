@@ -65,6 +65,7 @@ local death = Mode({
         })
         self.circle_bullets_da = self.circle_bullets_da + 1
       end
+      return love.audio.newSource("sfx/boss_explosion.ogg"):play()
     elseif tt > 7 then
       StateManager.switch("YouWin")
       SceneManager = require("lib.SceneManager")
