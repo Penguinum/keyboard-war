@@ -2,6 +2,7 @@ local vector = require("hump.vector")
 local signal = require("hump.signal")
 local lovelog = require("lib.lovelog")
 local config = require("config")
+local SceneManager
 local Bullet, CircleBullet
 do
   local _obj_0 = require("lib.Bullet")
@@ -155,22 +156,6 @@ do
         end
       end
     end,
-    bullet1 = function(self, x, y)
-      local bullet = Bullet({
-        pos = Vector(x, y),
-        speed = math.random(30, 200),
-        dir = Vector(math.random() - 0.5, math.random()):normalized(),
-        char = "9",
-        type = "evil"
-      })
-      bullet.update = function(self, dt)
-        self.pos = self.pos + (self.speed * dt * self.dir)
-        self.hitbox:moveTo(self.pos.x, self.pos.y)
-        if self.pos.y < 0 or self.pos.y > config.scene_height or self.pos.x < 0 or self.pos.x > config.scene_width then
-          return self:remove()
-        end
-      end
-    end,
     spawnCircleBullets = function(self, args)
       for i = 0, args.n - 1 do
         local a = i * (math.pi * 2) / args.n
@@ -190,7 +175,23 @@ do
       end
     end,
     shoot = function(self)
-      return self:bullet1(self.pos.x, self.pos.y + 20)
+      local x, y = self.pos.x, self.pos.y + 20
+      print("VECTORZ", SceneManager:getPlayerPosition(), self.pos)
+      local dir = SceneManager:getPlayerPosition() - self.pos
+      local bullet = Bullet({
+        pos = Vector(x, y),
+        speed = math.random(30, 200),
+        dir = dir:normalized(),
+        char = "9",
+        type = "evil"
+      })
+      bullet.update = function(self, dt)
+        self.pos = self.pos + (self.speed * dt * self.dir)
+        self.hitbox:moveTo(self.pos.x, self.pos.y)
+        if self.pos.y < 0 or self.pos.y > config.scene_height or self.pos.x < 0 or self.pos.x > config.scene_width then
+          return self:remove()
+        end
+      end
     end,
     draw = function(self)
       _class_0.__parent.draw(self)
@@ -202,6 +203,7 @@ do
   setmetatable(_base_0, _parent_0.__base)
   _class_0 = setmetatable({
     __init = function(self, args)
+      SceneManager = require("lib.SceneManager")
       self.pos = args.income_pos
       self.income_pos = args.income_pos
       self.spawn_pos = args.pos

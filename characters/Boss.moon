@@ -2,6 +2,7 @@ vector = require "hump.vector"
 signal = require "hump.signal"
 lovelog = require "lib.lovelog"
 config = require "config"
+local SceneManager
 import Bullet, CircleBullet from require "lib.Bullet"
 import Mode from require "lib.Modes"
 import graphics, keyboard from love
@@ -110,6 +111,7 @@ boss_modes = {
 
 class Enemy extends Basechar
   new: (args) =>
+    SceneManager = require "lib.SceneManager"
     @pos = args.income_pos
     @income_pos = args.income_pos
     @spawn_pos = args.pos
@@ -152,20 +154,6 @@ class Enemy extends Basechar
           if @hp == 0
             @mode = "death"
 
-  bullet1: (x, y) =>
-    bullet = Bullet{
-      pos: Vector(x, y)
-      speed: math.random(30, 200)
-      dir: Vector(math.random! - 0.5, math.random!)\normalized!
-      char: "9"
-      type: "evil"
-    }
-    bullet.update = (dt) =>
-      @pos += @speed * dt * @dir
-      @hitbox\moveTo @pos.x, @pos.y
-      if @pos.y < 0 or @pos.y > config.scene_height or @pos.x < 0 or @pos.x > config.scene_width
-        @remove!
-
   spawnCircleBullets: (args) =>
     for i = 0, args.n-1
       a = i*(math.pi*2)/args.n
@@ -183,7 +171,21 @@ class Enemy extends Basechar
       }
 
   shoot: =>
-    @bullet1 @pos.x, @pos.y + 20
+    x, y = @pos.x, @pos.y + 20
+    print "VECTORZ", SceneManager\getPlayerPosition!, @pos
+    dir = SceneManager\getPlayerPosition! - @pos
+    bullet = Bullet{
+      pos: Vector(x, y)
+      speed: math.random(30, 200)
+      dir: dir\normalized!
+      char: "9"
+      type: "evil"
+    }
+    bullet.update = (dt) =>
+      @pos += @speed * dt * @dir
+      @hitbox\moveTo @pos.x, @pos.y
+      if @pos.y < 0 or @pos.y > config.scene_height or @pos.x < 0 or @pos.x > config.scene_width
+        @remove!
 
   draw: =>
     super\draw!

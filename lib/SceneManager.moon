@@ -43,6 +43,9 @@ SceneManager =
   removeEnemy: (obj) =>
     enemies[obj] = nil
 
+  getPlayerPosition: =>
+    player.pos
+
   setPlayer: (p) =>
     player = p
 

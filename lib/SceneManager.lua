@@ -44,6 +44,9 @@ local SceneManager = {
   removeEnemy = function(self, obj)
     enemies[obj] = nil
   end,
+  getPlayerPosition = function(self)
+    return player.pos
+  end,
   setPlayer = function(self, p)
     player = p
   end,
