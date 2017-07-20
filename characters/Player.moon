@@ -4,6 +4,7 @@ lovelog = require "lib.lovelog"
 colorize = require "lib.colorize"
 config = require "config"
 import Bullet, BulletManager from require "lib.Bullet"
+import Bomb, BombManager from require "lib.Bomb"
 import graphics from love
 Controller = require "lib.Controller"
 Basechar = require "lib.Basechar"
@@ -21,6 +22,7 @@ class Player extends Basechar
   bombs: 3
 
   draw: =>
+    BombManager\draw!
     super\draw!
     if @draw_hitbox
       colorize {255, 0, 0}, -> love.graphics.circle "fill", @pos.x, @pos.y, @hitbox_radius
@@ -29,6 +31,7 @@ class Player extends Basechar
     lovelog.print "Player x: " .. @pos.x
 
   update: (dt) =>
+    BombManager\update dt
     if keys_locked
       return
     vec = Vector 0
@@ -94,7 +97,12 @@ class Player extends Basechar
     }
 
   explodeBomb: =>
-    BulletManager\removeAllBullets!
+    -- BulletManager\removeAllBullets!
+    Bomb {
+      pos: @pos
+      lifetime: 0.1
+      rad: 100
+    }
 
   keyreleased: (key) =>
     keys_locked = false

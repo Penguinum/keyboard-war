@@ -8,6 +8,11 @@ do
   local _obj_0 = require("lib.Bullet")
   Bullet, BulletManager = _obj_0.Bullet, _obj_0.BulletManager
 end
+local Bomb, BombManager
+do
+  local _obj_0 = require("lib.Bomb")
+  Bomb, BombManager = _obj_0.Bomb, _obj_0.BombManager
+end
 local graphics
 graphics = love.graphics
 local Controller = require("lib.Controller")
@@ -27,6 +32,7 @@ do
     lives = 3,
     bombs = 3,
     draw = function(self)
+      BombManager:draw()
       _class_0.__parent.draw(self)
       if self.draw_hitbox then
         colorize({
@@ -42,6 +48,7 @@ do
       return lovelog.print("Player x: " .. self.pos.x)
     end,
     update = function(self, dt)
+      BombManager:update(dt)
       if keys_locked then
         return 
       end
@@ -117,7 +124,11 @@ do
       })
     end,
     explodeBomb = function(self)
-      return BulletManager:removeAllBullets()
+      return Bomb({
+        pos = self.pos,
+        lifetime = 0.1,
+        rad = 100
+      })
     end,
     keyreleased = function(self, key)
       keys_locked = false
