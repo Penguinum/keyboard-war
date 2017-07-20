@@ -23,6 +23,7 @@ death = Mode{
 appear = Mode {
   id: "appear"
   init_func: () =>
+    signal.emit("boss_hp", @max_hp, @hp)
     @diff_pos = @spawn_pos - @income_pos
   update_func: (dt, tt) =>
     if tt < 1
