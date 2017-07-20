@@ -139,11 +139,12 @@ local events = {
 local Stage1
 do
   local _class_0
-  local enemy
+  local enemy, music
   local _base_0 = {
     events = events,
     enter = function(self)
       self.time = 0
+      music:play()
       self.current_event = 1
       love.graphics.setFont(config.fonts.art)
       return SceneManager:spawnPlayer(Vector(0.5, 0.9))
@@ -161,6 +162,9 @@ do
       lovelog.reset()
       SceneManager:draw()
       return lovelog.print("FPS: " .. love.timer.getFPS())
+    end,
+    quit = function(self)
+      return music:stop()
     end
   }
   _base_0.__index = _base_0
@@ -179,6 +183,8 @@ do
   _base_0.__class = _class_0
   local self = _class_0
   enemy = nil
+  music = love.audio.newSource("music/Confusion.ogg")
+  music:setVolume(0.5)
   Stage1 = _class_0
   return _class_0
 end
