@@ -67,9 +67,9 @@ do
       end)
       for _, row in ipairs(self.matrix) do
         colorize({
-          10,
-          200,
-          10,
+          20,
+          80,
+          20,
           self.alpha
         }, function()
           return love.graphics.print(table.concat(row), 0, yoffset)
