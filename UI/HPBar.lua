@@ -15,25 +15,18 @@ do
       local total_width = config.scene_width - shift * 2
       local hp_width = total_width * percentage / 100
       colorize({
-        122,
+        0,
         0,
         0
       }, function()
-        return graphics.rectangle("fill", shift, 10, total_width, 10)
-      end)
-      colorize({
-        200,
-        0,
-        0
-      }, function()
-        return graphics.rectangle("fill", shift, 10, hp_width, 10)
+        return graphics.rectangle("fill", shift, 0, total_width, 6)
       end)
       return colorize({
-        255,
-        0,
-        0
+        20,
+        200,
+        20
       }, function()
-        return graphics.rectangle("line", shift, 10, total_width, 10)
+        return graphics.rectangle("fill", shift, 0, hp_width, 6)
       end)
     end,
     update = function(self) end
@@ -54,7 +47,7 @@ do
   _base_0.__class = _class_0
   local self = _class_0
   percentage = 100
-  shift = 100
+  shift = 0
   signal.register("boss_hp", function(...)
     return self:update_percentage(...)
   end)
