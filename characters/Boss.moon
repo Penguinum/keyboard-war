@@ -42,7 +42,10 @@ walk = Mode{
       @direction = (@direction == "right") and "left" or "right"
       @text = @texts[@direction]
     if math.random! > 0.96
-      @shoot!
+      player_pos = SceneManager\getPlayerPosition!
+      for d1 = -1, 1
+        for d2 = -1, 1
+          @shoot @pos.x + d1*10, @pos.y + 10, player_pos.x + d2*10, player_pos.y
     if @direction == "left" then
       vec.x = -1
     else
@@ -170,15 +173,14 @@ class Enemy extends Basechar
         rad: args.rad
       }
 
-  shoot: =>
-    x, y = @pos.x, @pos.y + 20
-    print "VECTORZ", SceneManager\getPlayerPosition!, @pos
-    dir = SceneManager\getPlayerPosition! - @pos
+  shoot: (x, y, tx, ty) =>
+    --print "VECTORZ", SceneManager\getPlayerPosition!, @pos
+    dir = Vector(tx, ty) - Vector(x, y)
     bullet = Bullet{
       pos: Vector(x, y)
-      speed: math.random(30, 200)
+      -- speed: math.random(100, 200)
+      speed: 200
       dir: dir\normalized!
-      char: "9"
       type: "evil"
     }
     bullet.update = (dt) =>

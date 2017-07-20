@@ -1,4 +1,5 @@
 local colorize = require("lib.colorize")
+local Synth = require("lib.Synth")
 local HC = require("HCWorld")
 local BulletManager
 BulletManager = require("lib.Bullet").BulletManager
@@ -63,6 +64,11 @@ do
   _base_0.__index = _base_0
   _class_0 = setmetatable({
     __init = function(self, args)
+      Synth:play({
+        gen = "WhiteNoise",
+        length = 0.1,
+        frequency = 1
+      })
       self.pos = args.pos
       self.rad = args.rad
       self.hitbox = HC:circle(self.pos.x, self.pos.y, self.rad)

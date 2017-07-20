@@ -3,6 +3,7 @@
 colorize = require "lib.colorize"
 -- signal = require "hump.signal"
 --config = require "config"
+Synth = require "lib.Synth"
 HC = require "HCWorld"
 import BulletManager from require "lib.Bullet"
 import graphics from love
@@ -36,6 +37,11 @@ BombManager =
 
 class Bomb
   new: (args) =>
+    Synth\play {
+      gen: "WhiteNoise"
+      length: 0.1
+      frequency: 1
+    }
     @pos = args.pos
     @rad = args.rad
     @hitbox = HC\circle(@pos.x, @pos.y, @rad)
