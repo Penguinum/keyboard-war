@@ -22,7 +22,7 @@ do
       return sample
     end,
     play = function(self, arg)
-      arg.gen = arg.gen or "WhiteNoise"
+      arg.gen = arg.gen or "Triangle"
       local arg_serialized = arg.gen .. ":" .. arg.freq .. ":" .. arg.length
       if not cache[arg_serialized] then
         cache[arg_serialized] = self:generate(arg)
