@@ -163,7 +163,7 @@ class Enemy extends Basechar
                          @pos.x + hw, @pos.y + hh,
                          @pos.x - hw, @pos.y + hh
     -- @hitbox = HC\circle args.income_pos.x, args.income_pos.y, @hitbox_radius
-    @max_hp = 100
+    @max_hp = 500
     @hp = @max_hp
     @texts = {
       right: "(凸ಠ益ಠ)凸"

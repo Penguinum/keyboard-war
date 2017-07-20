@@ -258,7 +258,7 @@ do
       self.height = 15
       local hw, hh = self.width / 2, self.height / 2
       self.hitbox = HC:polygon(self.pos.x - hw, self.pos.y - hh, self.pos.x + hw, self.pos.y - hh, self.pos.x + hw, self.pos.y + hh, self.pos.x - hw, self.pos.y + hh)
-      self.max_hp = 100
+      self.max_hp = 500
       self.hp = self.max_hp
       self.texts = {
         right = "(凸ಠ益ಠ)凸",
