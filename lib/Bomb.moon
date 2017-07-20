@@ -40,7 +40,7 @@ class Bomb
     Synth\play {
       gen: "WhiteNoise"
       length: 0.1
-      frequency: 1
+      freq: 1
     }
     @pos = args.pos
     @rad = args.rad

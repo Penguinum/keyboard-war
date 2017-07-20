@@ -67,7 +67,7 @@ do
       Synth:play({
         gen = "WhiteNoise",
         length = 0.1,
-        frequency = 1
+        freq = 1
       })
       self.pos = args.pos
       self.rad = args.rad
