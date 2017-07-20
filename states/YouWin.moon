@@ -15,7 +15,7 @@ class YouWin
 
   draw: =>
     love.graphics.setFont config.fonts.art_big
-    love.graphics.printf "You Win! :3", 30, 50, 300
+    love.graphics.printf "You Win! (´• ω •`)", 30, 50, 300
     love.graphics.setFont config.fonts.menu
     x, y = 30, 100
     for i = 1, #@menu
