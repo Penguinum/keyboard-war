@@ -5,6 +5,7 @@ lovelog = require "lib.lovelog"
 config = require "config"
 
 love.load = ->
+  love.window.setTitle("Keyboard wars")
   math.randomseed os.time!
   if arg[#arg] == "-debug"
      require("mobdebug").start!

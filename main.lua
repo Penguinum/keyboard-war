@@ -4,6 +4,7 @@ local Controller = require("lib.Controller")
 local lovelog = require("lib.lovelog")
 local config = require("config")
 love.load = function()
+  love.window.setTitle("Keyboard wars")
   math.randomseed(os.time())
   if arg[#arg] == "-debug" then
     require("mobdebug").start()
