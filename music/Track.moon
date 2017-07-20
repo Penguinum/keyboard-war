@@ -76,7 +76,6 @@ class Track
       @.action(@source)
     elseif @level > 1
       @level = 1
-    print(@level)
     @source\setVolume(@level)
 
 return Track

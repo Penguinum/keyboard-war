@@ -45,7 +45,6 @@ do
       if next(HC:collisions(self.hitbox)) then
         for k, v in pairs(HC:collisions(self.hitbox)) do
           if k.type == "evil" then
-            print("EVILBOOLET", k)
             BulletManager:removeBulletWithHitbox(k)
           end
         end

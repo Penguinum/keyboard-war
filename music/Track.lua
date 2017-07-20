@@ -79,7 +79,6 @@ do
       elseif self.level > 1 then
         self.level = 1
       end
-      print(self.level)
       return self.source:setVolume(self.level)
     end
   }

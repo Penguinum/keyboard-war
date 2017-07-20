@@ -56,7 +56,6 @@ class Bomb
     if next(HC\collisions(@hitbox))
       for k, v in pairs HC\collisions(@hitbox)
         if k.type == "evil"
-          print "EVILBOOLET", k
           BulletManager\removeBulletWithHitbox(k)
 
   draw: =>
