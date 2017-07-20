@@ -151,7 +151,7 @@ class Enemy extends Basechar
         if k.type == "good"
           @hp -= @modes[@mode].damage
           signal.emit("boss_hp", @max_hp, @hp)
-          if @hp == 0
+          if @hp <= 0
             @mode = "death"
 
   spawnCircleBullets: (args) =>

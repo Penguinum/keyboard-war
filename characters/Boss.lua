@@ -149,7 +149,7 @@ do
           if k.type == "good" then
             self.hp = self.hp - self.modes[self.mode].damage
             signal.emit("boss_hp", self.max_hp, self.hp)
-            if self.hp == 0 then
+            if self.hp <= 0 then
               self.mode = "death"
             end
           end
