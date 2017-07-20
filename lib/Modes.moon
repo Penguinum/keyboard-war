@@ -11,6 +11,7 @@ class Mode
     @id = args.id
     @update_func = args.update_func
     @init_func = args.init_func
+    @damage = args.damage or 1
     @finished = false
     @total_time = 0
 

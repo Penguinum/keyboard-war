@@ -25,6 +25,7 @@ do
       self.id = args.id
       self.update_func = args.update_func
       self.init_func = args.init_func
+      self.damage = args.damage or 1
       self.finished = false
       self.total_time = 0
     end,
