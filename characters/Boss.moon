@@ -15,13 +15,45 @@ HC = require "HCWorld"
 death = Mode{
   id: "death"
   init_func: () =>
-    signal.emit("Stage1_end")
-    StateManager.switch "YouWin"
-    SceneManager = require "lib.SceneManager"
-    SceneManager\clear!
+    cx = config.scene_width/2
+    @diff_pos = vector(cx, @pos.y) - @pos
+    @income_pos = @pos
+    @circle_bullets_dt = 0
+    @circle_bullets_da = 0
+
 
   update_func: (dt, tt) =>
-    signal.emit("Stage1_end")
+    if tt < 1
+      cx = config.scene_width/2
+      @direction = (@pos.x > cx) and "left" or "right"
+      @text = @texts[@direction]
+      @pos = @income_pos - tt*tt*@diff_pos + tt*2*@diff_pos
+    elseif tt < 2
+      @pos = vector(config.scene_width/2, @pos.y)
+      @circle_bullets_dt += dt
+      @text = ""
+      if @circle_bullets_dt >= 0.2
+        @circle_bullets_dt = 0
+        @spawnCircleBullets{
+          n: 20
+          da: @circle_bullets_da*10
+          aspeed: 20
+          color: {220, 0, 0}
+          rad: 5
+        }
+        @spawnCircleBullets{
+          n: 20
+          da: -@circle_bullets_da*10
+          aspeed: -20
+          color: {220, 0, 0}
+          rad: 5
+        }
+        @circle_bullets_da += 1
+
+    elseif tt > 7
+      StateManager.switch "YouWin"
+      SceneManager = require "lib.SceneManager"
+      SceneManager\clear!
 
 }
 appear = Mode {
@@ -63,7 +95,7 @@ walk = Mode{
       @pos.x = config.scene_width
       @direction = "left"
     print "total time", tt
-    if tt > 5
+    if tt > 4
       @mode = "rage"
 
 }
@@ -75,7 +107,6 @@ rage = Mode{
     @circle_bullets_da = 0
     --@pos.x = 0
     cx = config.scene_width/2
-    @rage_speed = (cx - @pos.x)/0.5
     @diff_pos = vector(cx, @pos.y) - @pos
     @income_pos = @pos
 
@@ -132,7 +163,7 @@ class Enemy extends Basechar
                          @pos.x + hw, @pos.y + hh,
                          @pos.x - hw, @pos.y + hh
     -- @hitbox = HC\circle args.income_pos.x, args.income_pos.y, @hitbox_radius
-    @max_hp = 500
+    @max_hp = 100
     @hp = @max_hp
     @texts = {
       right: "(凸ಠ益ಠ)凸"
@@ -143,7 +174,6 @@ class Enemy extends Basechar
     @pmode = "nil"
     @text = [[(凸ಠ益ಠ)凸]]
     @speed = 100
-    @rage_speed = 300
     @modes = boss_modes
 
   update: (dt) =>
