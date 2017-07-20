@@ -23,13 +23,53 @@ local HC = require("HCWorld")
 local death = Mode({
   id = "death",
   init_func = function(self)
-    signal.emit("Stage1_end")
-    StateManager.switch("YouWin")
-    SceneManager = require("lib.SceneManager")
-    return SceneManager:clear()
+    local cx = config.scene_width / 2
+    self.diff_pos = vector(cx, self.pos.y) - self.pos
+    self.income_pos = self.pos
+    self.circle_bullets_dt = 0
+    self.circle_bullets_da = 0
   end,
   update_func = function(self, dt, tt)
-    return signal.emit("Stage1_end")
+    if tt < 1 then
+      local cx = config.scene_width / 2
+      self.direction = (self.pos.x > cx) and "left" or "right"
+      self.text = self.texts[self.direction]
+      self.pos = self.income_pos - tt * tt * self.diff_pos + tt * 2 * self.diff_pos
+    elseif tt < 2 then
+      self.pos = vector(config.scene_width / 2, self.pos.y)
+      self.circle_bullets_dt = self.circle_bullets_dt + dt
+      self.text = ""
+      if self.circle_bullets_dt >= 0.2 then
+        self.circle_bullets_dt = 0
+        self:spawnCircleBullets({
+          n = 20,
+          da = self.circle_bullets_da * 10,
+          aspeed = 20,
+          color = {
+            220,
+            0,
+            0
+          },
+          rad = 5
+        })
+        self:spawnCircleBullets({
+          n = 20,
+          da = -self.circle_bullets_da * 10,
+          aspeed = -20,
+          color = {
+            220,
+            0,
+            0
+          },
+          rad = 5
+        })
+        self.circle_bullets_da = self.circle_bullets_da + 1
+      end
+    elseif tt > 7 then
+      StateManager.switch("YouWin")
+      SceneManager = require("lib.SceneManager")
+      return SceneManager:clear()
+    end
   end
 })
 local appear = Mode({
@@ -78,7 +118,7 @@ local walk = Mode({
       self.direction = "left"
     end
     print("total time", tt)
-    if tt > 5 then
+    if tt > 4 then
       self.mode = "rage"
     end
   end
@@ -90,7 +130,6 @@ local rage = Mode({
     self.circle_bullets_dt = 0
     self.circle_bullets_da = 0
     local cx = config.scene_width / 2
-    self.rage_speed = (cx - self.pos.x) / 0.5
     self.diff_pos = vector(cx, self.pos.y) - self.pos
     self.income_pos = self.pos
   end,
@@ -230,7 +269,6 @@ do
       self.pmode = "nil"
       self.text = [[(凸ಠ益ಠ)凸]]
       self.speed = 100
-      self.rage_speed = 300
       self.modes = boss_modes
     end,
     __base = _base_0,
