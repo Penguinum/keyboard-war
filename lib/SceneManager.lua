@@ -52,6 +52,7 @@ local SceneManager = {
   end,
   clear = function(self)
     enemies = { }
+    return BulletManager:removeAllBullets()
   end,
   update = function(self, dt)
     for enemy, _ in pairs(enemies) do

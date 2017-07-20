@@ -51,6 +51,7 @@ SceneManager =
 
   clear: =>
     enemies = {}
+    BulletManager\removeAllBullets!
 
   update: (dt) =>
     for enemy, _ in pairs enemies
