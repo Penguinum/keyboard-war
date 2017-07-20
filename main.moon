@@ -4,6 +4,7 @@ MusicManager = require "music.Manager"
 
 Controller = require "lib.Controller"
 lovelog = require "lib.lovelog"
+lovelog.disable!
 config = require "config"
 
 love.load = ->
