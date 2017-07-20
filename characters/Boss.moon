@@ -3,6 +3,7 @@ signal = require "hump.signal"
 lovelog = require "lib.lovelog"
 config = require "config"
 local SceneManager
+StateManager = require "lib.StateManager"
 import Bullet, CircleBullet from require "lib.Bullet"
 import Mode from require "lib.Modes"
 import graphics, keyboard from love
@@ -15,6 +16,7 @@ death = Mode{
   id: "death"
   init_func: () =>
     signal.emit("Stage1_end")
+    StateManager.switch "YouWin"
 
   update_func: (dt, tt) =>
     signal.emit("Stage1_end")

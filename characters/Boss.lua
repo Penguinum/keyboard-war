@@ -3,6 +3,7 @@ local signal = require("hump.signal")
 local lovelog = require("lib.lovelog")
 local config = require("config")
 local SceneManager
+local StateManager = require("lib.StateManager")
 local Bullet, CircleBullet
 do
   local _obj_0 = require("lib.Bullet")
@@ -22,7 +23,8 @@ local HC = require("HCWorld")
 local death = Mode({
   id = "death",
   init_func = function(self)
-    return signal.emit("Stage1_end")
+    signal.emit("Stage1_end")
+    return StateManager.switch("YouWin")
   end,
   update_func = function(self, dt, tt)
     return signal.emit("Stage1_end")
