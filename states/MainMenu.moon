@@ -9,27 +9,8 @@ menu = {
   { id: "exit", text: "Exit", action: -> love.event.quit(0) }
 }
 
-LCS = require "LuaCanSound"
-class Synth
-  sine = LCS.generators.Triangle\new()
-  env = LCS.envelopes.ASR\new()
-  with env
-    \set{attack_seconds: 0.01}
-    \set{sustain_seconds: 0.05}
-    \set{decay_seconds: 0.01}
-
-  play: (arg) =>
-    sine\start arg.freq
-    env\start!
-    length = LCS.settings.sampleRate * arg.length
-    sample = love.sound.newSoundData(length, LCS.settings.sampleRate, 16, 1)
-    for i = 0, length-1
-      sample\setSample i, sine\tick!*env\tick!*0.1
-    love.audio.play love.audio.newSource sample
-
-
 class MainMenu
-  synth: Synth!
+  synth: require "lib.Synth"
   menu: menu
   active_node: 1
   matrix: Matrix!
