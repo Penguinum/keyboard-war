@@ -3,14 +3,14 @@ local StateManager = require("lib.StateManager")
 local colorize = require("lib.colorize")
 local menu = {
   {
-    id = "retry",
-    text = "Retry",
+    id = "tryagain",
+    text = "Try again",
     action = function()
       return StateManager.switch("TestStage1")
     end
   },
   {
-    id = "retry",
+    id = "mainmenu",
     text = "Return to main menu",
     action = function()
       return StateManager.switch("MainMenu")

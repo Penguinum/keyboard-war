@@ -26,7 +26,7 @@ local StatsPanel = {
     love.graphics.setCanvas(self.canvas)
     colorize({
       20,
-      0,
+      20,
       20
     }, function()
       return graphics.rectangle("fill", 0, 0, self.canvas:getWidth(), self.canvas:getHeight())
@@ -38,6 +38,7 @@ local StatsPanel = {
     graphics.printf("Precise move/concentrate: ctrl/shift", 10, 130, 200)
     love.graphics.printf("Shoot: z", 10, 160, 200)
     graphics.printf("Explode bomb: x", 10, 190, 200)
+    graphics.printf("Pause: escape", 10, 220, 200)
     graphics.setCanvas()
     return graphics.draw(self.canvas, config.scene_width, 0)
   end,
