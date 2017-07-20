@@ -1,10 +1,16 @@
 config = require "config"
 StateManager = require "lib.StateManager"
 SceneManager = require "lib.SceneManager"
+MusicManager = require "music.Manager"
 colorize = require "lib.colorize"
 
 menu = {
-  { id: "continue", text: "Continue", action: -> StateManager.resume!}
+  {
+    id: "continue", text: "Continue"
+    action: ->
+      MusicManager.sendEventToTag {tag:"Stage1", event:"resume"}
+      StateManager.resume!
+  }
   {
     id: "mainmenu", text: "Return to main menu"
     action: ->
@@ -34,7 +40,10 @@ class PauseMenu
   update: =>
 
   keypressed: (key_id) =>
-    if key_id == "down"
+    if key_id == "escape"
+      MusicManager.sendEventToTag {tag:"Stage1", event:"resume"}
+      StateManager.resume!
+    elseif key_id == "down"
       @active_node += 1
       if @active_node > #@menu
         @active_node = 1

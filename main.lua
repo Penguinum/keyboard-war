@@ -1,5 +1,6 @@
 local StateManager = require("lib.StateManager")
 local SceneManager = require("lib.SceneManager")
+local MusicManager = require("music.Manager")
 local Controller = require("lib.Controller")
 local lovelog = require("lib.lovelog")
 local config = require("config")
@@ -11,6 +12,13 @@ love.load = function()
   end
   StateManager.switch("MainMenu")
   return love.window.setMode(config.scene_width + config.panel_width, config.scene_height)
+end
+love.update = function(dt)
+  local scene = StateManager:getState()
+  if scene then
+    scene:update(dt)
+  end
+  return MusicManager.update(dt)
 end
 love.keypressed = function(key_id)
   if key_id == "f1" then

@@ -1,5 +1,7 @@
 local SceneManager = require("lib.SceneManager")
 local StateManager = require("lib.StateManager")
+local MusicManager = require("music.Manager")
+local Track = require("music.Track")
 local Vector = require("hump.vector")
 local Bullet
 Bullet = require("lib.Bullet").Bullet
@@ -230,10 +232,13 @@ do
     events = events,
     enter = function(self)
       self.time = 0
-      music:play()
       self.current_event = 1
       love.graphics.setFont(config.fonts.art)
-      return SceneManager:spawnPlayer(Vector(0.5, 0.9))
+      SceneManager:spawnPlayer(Vector(0.5, 0.9))
+      return MusicManager.sendEventToTag({
+        tag = "Stage1",
+        event = "play"
+      })
     end,
     update = function(self, dt)
       SceneManager:update(dt)
@@ -246,6 +251,10 @@ do
     end,
     keypressed = function(self, key)
       if key == "escape" then
+        MusicManager.sendEventToTag({
+          tag = "Stage1",
+          event = "pause"
+        })
         return StateManager.pause("PauseMenu")
       end
     end,
@@ -255,12 +264,21 @@ do
       return lovelog.print("FPS: " .. love.timer.getFPS())
     end,
     leave = function(self)
-      return music:stop()
+      return MusicManager.sendEventToTag({
+        tag = "Stage1",
+        event = "stop"
+      })
     end
   }
   _base_0.__index = _base_0
   _class_0 = setmetatable({
-    __init = function() end,
+    __init = function(self)
+      return MusicManager.addTrack({
+        track = music,
+        alias = "Stage1",
+        tag = "Stage1"
+      })
+    end,
     __base = _base_0,
     __name = "Stage1"
   }, {
@@ -274,8 +292,10 @@ do
   _base_0.__class = _class_0
   local self = _class_0
   enemy = nil
-  music = love.audio.newSource("music/Confusion.ogg")
-  music:setVolume(0.5)
+  music = Track("music/Confusion.ogg"):set({
+    fadein = 1,
+    fadeout = 1
+  })
   Stage1 = _class_0
   return _class_0
 end

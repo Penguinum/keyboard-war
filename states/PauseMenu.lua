@@ -1,12 +1,17 @@
 local config = require("config")
 local StateManager = require("lib.StateManager")
 local SceneManager = require("lib.SceneManager")
+local MusicManager = require("music.Manager")
 local colorize = require("lib.colorize")
 local menu = {
   {
     id = "continue",
     text = "Continue",
     action = function()
+      MusicManager.sendEventToTag({
+        tag = "Stage1",
+        event = "resume"
+      })
       return StateManager.resume()
     end
   },
@@ -56,7 +61,13 @@ do
     end,
     update = function(self) end,
     keypressed = function(self, key_id)
-      if key_id == "down" then
+      if key_id == "escape" then
+        MusicManager.sendEventToTag({
+          tag = "Stage1",
+          event = "resume"
+        })
+        return StateManager.resume()
+      elseif key_id == "down" then
         self.active_node = self.active_node + 1
         if self.active_node > #self.menu then
           self.active_node = 1

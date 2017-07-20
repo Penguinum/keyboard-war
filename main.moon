@@ -1,5 +1,7 @@
 StateManager = require "lib.StateManager"
 SceneManager = require "lib.SceneManager"
+MusicManager = require "music.Manager"
+
 Controller = require "lib.Controller"
 lovelog = require "lib.lovelog"
 config = require "config"
@@ -14,6 +16,12 @@ love.load = ->
   love.window.setMode config.scene_width + config.panel_width, config.scene_height
   -- love.graphics.setPointSize(2)
   -- StateManager.load "Stage1", 2
+
+love.update = (dt) ->
+  scene = StateManager\getState!
+  if scene
+    scene\update dt
+  MusicManager.update dt
 
 love.keypressed = (key_id) ->
   if key_id == "f1"
