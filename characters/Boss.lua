@@ -23,12 +23,12 @@ local HC = require("HCWorld")
 local death = Mode({
   id = "death",
   init_func = function(self)
+    self.exploded = nil
     local cx = config.scene_width / 2
     self.diff_pos = vector(cx, self.pos.y) - self.pos
     self.income_pos = self.pos
     self.circle_bullets_dt = 0
     self.circle_bullets_da = 0
-    return love.audio.newSource("sfx/boss_explosion.ogg"):play()
   end,
   update_func = function(self, dt, tt)
     if tt < 1 then
@@ -41,6 +41,10 @@ local death = Mode({
       self.circle_bullets_dt = self.circle_bullets_dt + dt
       self.text = ""
       if self.circle_bullets_dt >= 0.2 then
+        if not self.exploded then
+          love.audio.newSource("sfx/boss_explosion.ogg"):play()
+          self.exploded = true
+        end
         self.circle_bullets_dt = 0
         self:spawnCircleBullets({
           n = 20,
