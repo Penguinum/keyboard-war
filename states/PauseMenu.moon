@@ -1,21 +1,27 @@
 config = require "config"
 StateManager = require "lib.StateManager"
+SceneManager = require "lib.SceneManager"
 colorize = require "lib.colorize"
 
 menu = {
-  { id: "retry", text: "Retry", action: -> StateManager.switch "TestStage1"}
-  { id: "mainmenu", text: "Return to main menu", action: -> StateManager.switch "MainMenu"}
+  { id: "continue", text: "Continue", action: -> StateManager.resume!}
+  {
+    id: "mainmenu", text: "Return to main menu"
+    action: ->
+      SceneManager.clear!
+      StateManager.switch "MainMenu"
+  }
   { id: "exit", text: "Exit", action: -> love.event.quit(0)}
 }
 
-class GameOver
+class PauseMenu
   menu: menu
   enter: =>
     @active_node = 1
 
   draw: =>
     love.graphics.setFont config.fonts.art_big
-    love.graphics.printf "Game over ლ(ಠ_ಠ ლ)", 30, 50, 300
+    love.graphics.printf "Paused (　’ω’)旦~~", 30, 50, 300
     love.graphics.setFont config.fonts.menu
     x, y = 30, 100
     for i = 1, #@menu

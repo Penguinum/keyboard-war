@@ -9,8 +9,8 @@ drawline = (num) ->
 
 StatsPanel =
   canvas: love.graphics.newCanvas config.panel_width, config.scene_height
-  lives: 3
-  bombs: 3
+  lives: 0
+  bombs: 0
 
   draw: =>
     love.graphics.setFont config.fonts.art_big
@@ -33,6 +33,10 @@ signal.register "bomb_exploded", (arg) ->
   StatsPanel.bombs = arg.bombs
 
 signal.register "player_meets_bullet", (arg) ->
+  StatsPanel.lives = arg.lives
+  StatsPanel.bombs = arg.bombs
+
+signal.register "update_player_info", (arg) ->
   StatsPanel.lives = arg.lives
   StatsPanel.bombs = arg.bombs
 

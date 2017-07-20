@@ -19,8 +19,8 @@ drawline = function(num)
 end
 local StatsPanel = {
   canvas = love.graphics.newCanvas(config.panel_width, config.scene_height),
-  lives = 3,
-  bombs = 3,
+  lives = 0,
+  bombs = 0,
   draw = function(self)
     love.graphics.setFont(config.fonts.art_big)
     love.graphics.setCanvas(self.canvas)
@@ -47,6 +47,10 @@ signal.register("bomb_exploded", function(arg)
   StatsPanel.bombs = arg.bombs
 end)
 signal.register("player_meets_bullet", function(arg)
+  StatsPanel.lives = arg.lives
+  StatsPanel.bombs = arg.bombs
+end)
+signal.register("update_player_info", function(arg)
   StatsPanel.lives = arg.lives
   StatsPanel.bombs = arg.bombs
 end)

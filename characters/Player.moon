@@ -21,6 +21,10 @@ class Player extends Basechar
   lives: 3 -- lives
   bombs: 3
 
+  new: =>
+    super\__init!
+    signal.emit("update_player_info", {lives: @lives, bombs: @bombs})
+
   draw: =>
     BombManager\draw!
     super\draw!

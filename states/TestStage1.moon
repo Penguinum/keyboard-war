@@ -1,4 +1,5 @@
 SceneManager = require "lib.SceneManager"
+StateManager = require "lib.StateManager"
 Vector = require "hump.vector"
 import Bullet from require "lib.Bullet"
 lovelog = require "lib.lovelog"
@@ -197,6 +198,9 @@ class Stage1
       @current_event += 1
       event.action!
 
+  keypressed: (key) =>
+    if key == "escape"
+      StateManager.pause "PauseMenu"
 
   draw: =>
     lovelog.reset!

@@ -1,4 +1,5 @@
 local SceneManager = require("lib.SceneManager")
+local StateManager = require("lib.StateManager")
 local Vector = require("hump.vector")
 local Bullet
 Bullet = require("lib.Bullet").Bullet
@@ -241,6 +242,11 @@ do
       if event and self.time >= event.time then
         self.current_event = self.current_event + 1
         return event.action()
+      end
+    end,
+    keypressed = function(self, key)
+      if key == "escape" then
+        return StateManager.pause("PauseMenu")
       end
     end,
     draw = function(self)

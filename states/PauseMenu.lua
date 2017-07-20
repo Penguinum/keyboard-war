@@ -1,18 +1,20 @@
 local config = require("config")
 local StateManager = require("lib.StateManager")
+local SceneManager = require("lib.SceneManager")
 local colorize = require("lib.colorize")
 local menu = {
   {
-    id = "retry",
-    text = "Retry",
+    id = "continue",
+    text = "Continue",
     action = function()
-      return StateManager.switch("TestStage1")
+      return StateManager.resume()
     end
   },
   {
     id = "mainmenu",
     text = "Return to main menu",
     action = function()
+      SceneManager.clear()
       return StateManager.switch("MainMenu")
     end
   },
@@ -24,7 +26,7 @@ local menu = {
     end
   }
 }
-local GameOver
+local PauseMenu
 do
   local _class_0
   local _base_0 = {
@@ -34,7 +36,7 @@ do
     end,
     draw = function(self)
       love.graphics.setFont(config.fonts.art_big)
-      love.graphics.printf("Game over ლ(ಠ_ಠ ლ)", 30, 50, 300)
+      love.graphics.printf("Paused (　’ω’)旦~~", 30, 50, 300)
       love.graphics.setFont(config.fonts.menu)
       local x, y = 30, 100
       for i = 1, #self.menu do
@@ -73,7 +75,7 @@ do
   _class_0 = setmetatable({
     __init = function() end,
     __base = _base_0,
-    __name = "GameOver"
+    __name = "PauseMenu"
   }, {
     __index = _base_0,
     __call = function(cls, ...)
@@ -83,6 +85,6 @@ do
     end
   })
   _base_0.__class = _class_0
-  GameOver = _class_0
+  PauseMenu = _class_0
   return _class_0
 end
