@@ -1,6 +1,3 @@
--- FIXME: this is important to make .love file work
-package.path = 'lib/?.lua;lib/?/?.lua;lib/?/init.lua;?.lua;?/init.lua;' .. package.path
-love.filesystem.setRequirePath(package.path)
 local StateManager = require("lib.StateManager")
 local SceneManager = require("lib.SceneManager")
 local Controller = require("lib.Controller")
