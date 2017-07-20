@@ -33,6 +33,11 @@ local StatsPanel = {
     end)
     graphics.printf("Lives: " .. drawline(self.lives), 10, 10, 200)
     graphics.printf("Bombs: " .. drawline(self.bombs), 10, 30, 200)
+    love.graphics.setFont(config.fonts.art)
+    graphics.printf("Move: left, up, top, bottom", 10, 100, 200)
+    graphics.printf("Precise move/concentrate: ctrl/shift", 10, 130, 200)
+    love.graphics.printf("Shoot: z", 10, 160, 200)
+    graphics.printf("Explode bomb: x", 10, 190, 200)
     graphics.setCanvas()
     return graphics.draw(self.canvas, config.scene_width, 0)
   end,

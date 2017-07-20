@@ -18,8 +18,14 @@ StatsPanel =
     colorize {20, 0, 20}, -> graphics.rectangle "fill", 0, 0, @canvas\getWidth!, @canvas\getHeight!
     graphics.printf "Lives: " .. drawline(@lives), 10, 10, 200
     graphics.printf "Bombs: " .. drawline(@bombs), 10, 30, 200
+    love.graphics.setFont config.fonts.art
+    graphics.printf "Move: left, up, top, bottom", 10, 100, 200
+    graphics.printf "Precise move/concentrate: ctrl/shift", 10, 130, 200
+    love.graphics.printf "Shoot: z", 10, 160, 200
+    graphics.printf "Explode bomb: x", 10, 190, 200
     graphics.setCanvas!
     graphics.draw @canvas, config.scene_width, 0
+
 
   update: (dt) =>
 
