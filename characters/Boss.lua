@@ -3,6 +3,7 @@ local signal = require("hump.signal")
 local lovelog = require("lib.lovelog")
 local config = require("config")
 local SceneManager
+local MusicManager = require("music.Manager")
 local StateManager = require("lib.StateManager")
 local Bullet, CircleBullet
 do
@@ -43,6 +44,11 @@ local death = Mode({
       if self.circle_bullets_dt >= 0.2 then
         if not self.exploded then
           love.audio.newSource("sfx/boss_explosion.ogg"):play()
+          MusicManager.sendEventToTag({
+            tag = "Stage1",
+            event = "stop",
+            parameters = 4
+          })
           self.exploded = true
         end
         self.circle_bullets_dt = 0
@@ -70,7 +76,7 @@ local death = Mode({
         })
         self.circle_bullets_da = self.circle_bullets_da + 1
       end
-    elseif tt > 7 then
+    elseif tt > 5 then
       StateManager.switch("YouWin")
       SceneManager = require("lib.SceneManager")
       return SceneManager:clear()
