@@ -74,6 +74,7 @@ local walk = Mode({
 })
 local rage = Mode({
   id = "rage",
+  damage = 0.2,
   init_func = function(self)
     self.circle_bullets_dt = 0
     self.circle_bullets_da = 0
@@ -145,7 +146,7 @@ do
       if next(HC:collisions(self.hitbox)) then
         for k, v in pairs(HC:collisions(self.hitbox)) do
           if k.type == "good" then
-            self.hp = self.hp - 1
+            self.hp = self.hp - self.modes[self.mode].damage
             signal.emit("boss_hp", self.max_hp, self.hp)
             if self.hp == 0 then
               self.mode = "death"
@@ -209,7 +210,7 @@ do
       self.height = 15
       local hw, hh = self.width / 2, self.height / 2
       self.hitbox = HC:polygon(self.pos.x - hw, self.pos.y - hh, self.pos.x + hw, self.pos.y - hh, self.pos.x + hw, self.pos.y + hh, self.pos.x - hw, self.pos.y + hh)
-      self.max_hp = 400
+      self.max_hp = 500
       self.hp = self.max_hp
       self.texts = {
         right = "(凸ಠ益ಠ)凸",

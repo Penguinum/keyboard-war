@@ -60,6 +60,7 @@ walk = Mode{
 }
 rage = Mode{
   id: "rage"
+  damage: 0.2
   init_func: () =>
     @circle_bullets_dt = 0
     @circle_bullets_da = 0
@@ -121,7 +122,7 @@ class Enemy extends Basechar
                          @pos.x + hw, @pos.y + hh,
                          @pos.x - hw, @pos.y + hh
     -- @hitbox = HC\circle args.income_pos.x, args.income_pos.y, @hitbox_radius
-    @max_hp = 400
+    @max_hp = 500
     @hp = @max_hp
     @texts = {
       right: "(凸ಠ益ಠ)凸"
@@ -146,7 +147,7 @@ class Enemy extends Basechar
     if next(HC\collisions(@hitbox))
       for k, v in pairs HC\collisions(@hitbox)
         if k.type == "good"
-          @hp -= 1
+          @hp -= @modes[@mode].damage
           signal.emit("boss_hp", @max_hp, @hp)
           if @hp == 0
             @mode = "death"
