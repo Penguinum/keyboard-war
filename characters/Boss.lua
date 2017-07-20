@@ -28,6 +28,7 @@ local death = Mode({
     self.income_pos = self.pos
     self.circle_bullets_dt = 0
     self.circle_bullets_da = 0
+    return love.audio.newSource("sfx/boss_explosion.ogg"):play()
   end,
   update_func = function(self, dt, tt)
     if tt < 1 then
@@ -65,7 +66,6 @@ local death = Mode({
         })
         self.circle_bullets_da = self.circle_bullets_da + 1
       end
-      return love.audio.newSource("sfx/boss_explosion.ogg"):play()
     elseif tt > 7 then
       StateManager.switch("YouWin")
       SceneManager = require("lib.SceneManager")

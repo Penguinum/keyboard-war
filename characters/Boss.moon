@@ -20,6 +20,7 @@ death = Mode{
     @income_pos = @pos
     @circle_bullets_dt = 0
     @circle_bullets_da = 0
+    love.audio.newSource("sfx/boss_explosion.ogg")\play!
 
 
   update_func: (dt, tt) =>
@@ -49,7 +50,6 @@ death = Mode{
           rad: 5
         }
         @circle_bullets_da += 1
-      love.audio.newSource("sfx/boss_explosion.ogg")\play!
 
     elseif tt > 7
       StateManager.switch "YouWin"
