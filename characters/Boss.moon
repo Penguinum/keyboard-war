@@ -17,6 +17,8 @@ death = Mode{
   init_func: () =>
     signal.emit("Stage1_end")
     StateManager.switch "YouWin"
+    SceneManager = require "lib.SceneManager"
+    SceneManager\clear!
 
   update_func: (dt, tt) =>
     signal.emit("Stage1_end")

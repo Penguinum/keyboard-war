@@ -24,7 +24,7 @@ local menu = {
     end
   }
 }
-local GameOver
+local YouWin
 do
   local _class_0
   local _base_0 = {
@@ -73,7 +73,7 @@ do
   _class_0 = setmetatable({
     __init = function() end,
     __base = _base_0,
-    __name = "GameOver"
+    __name = "YouWin"
   }, {
     __index = _base_0,
     __call = function(cls, ...)
@@ -83,6 +83,6 @@ do
     end
   })
   _base_0.__class = _class_0
-  GameOver = _class_0
+  YouWin = _class_0
   return _class_0
 end

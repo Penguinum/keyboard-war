@@ -24,7 +24,9 @@ local death = Mode({
   id = "death",
   init_func = function(self)
     signal.emit("Stage1_end")
-    return StateManager.switch("YouWin")
+    StateManager.switch("YouWin")
+    SceneManager = require("lib.SceneManager")
+    return SceneManager:clear()
   end,
   update_func = function(self, dt, tt)
     return signal.emit("Stage1_end")

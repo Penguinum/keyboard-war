@@ -8,7 +8,7 @@ menu = {
   { id: "exit", text: "Exit", action: -> love.event.quit(0)}
 }
 
-class GameOver
+class YouWin
   menu: menu
   enter: =>
     @active_node = 1
