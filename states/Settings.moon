@@ -42,3 +42,5 @@ class Settings
         @active_node = #@menu
     elseif @menu[@active_node].keypressed
       @menu[@active_node]\keypressed key
+
+  update: (dt) =>

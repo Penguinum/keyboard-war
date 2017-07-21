@@ -61,7 +61,8 @@ do
       elseif self.menu[self.active_node].keypressed then
         return self.menu[self.active_node]:keypressed(key)
       end
-    end
+    end,
+    update = function(self, dt) end
   }
   _base_0.__index = _base_0
   _class_0 = setmetatable({
