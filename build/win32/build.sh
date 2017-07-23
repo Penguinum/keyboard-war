@@ -11,7 +11,7 @@ rm -rf keyboardwars
 unzip love-0.10.2-win32.zip
 mv love-0.10.2-win32 keyboardwars
 
-cd ../../ && zip -9 -r KeyboardWars.love . -x "build/*" ".gitmodules" ".git/*" "*/.git" "*/.git/*"
+cd ../../ && zip -9 -r KeyboardWars.love . -x "build/*" ".gitmodules" ".git/*" "*/.git" "*/.git/*" "*/docs/*"
 cd - && mv ../../KeyboardWars.love .
 cat keyboardwars/love.exe KeyboardWars.love > keyboardwars/KeyboardWars.exe
 cd keyboardwars && rm love.exe lovec.exe readme.txt changes.txt
