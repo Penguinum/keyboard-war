@@ -15,8 +15,14 @@ Bullet hell game with kaomoji-based characters. Early pre-pre-alpha stage.
 * [ ] Gamestate-based quasiprocedural music
 * [ ] Code cleanup
 
+## Source and project page
+https://github.com/Penguinum/keyboard-war
+
 ## License
 MIT (see LICENSE file)
+
+## Engine
+[LÖVE](https://love2d.org)
 
 ## Used 3rd party libraries and resources
 Libraries:
