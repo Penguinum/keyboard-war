@@ -5,7 +5,7 @@
   panel_width: 200
   fonts: require "fonts"
   binds: {
-    shoot: "z"
+    shoot: {"z", "return"}
     bomb: "x"
     slowdown: {"lshift", "lctrl"}
   }
