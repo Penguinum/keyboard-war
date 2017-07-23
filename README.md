@@ -3,15 +3,17 @@ Bullet hell game with kaomoji-based characters. Early pre-pre-alpha stage.
 
 ## TODO
 * [x] Playable prototype
+* [ ] Code cleanup
 * [ ] More playable prototype
 * [ ] More enemies and bullet types
 * [ ] More levels
 * [ ] Procedural backgrounds
 * [ ] Dialogs?
 * [ ] ...
-* [ ] Code cleanup
+* [ ] More code cleanup
 * [ ] Procedural sound
 * [ ] Gamestate-based quasiprocedural music
+* [ ] Code cleanup
 
 ## License
 MIT (see LICENSE file)
