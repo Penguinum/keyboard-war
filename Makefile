@@ -1,6 +1,6 @@
 all: run
 
-run: moon
+run:
 	love .
 
 moon:

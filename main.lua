@@ -1,43 +1,52 @@
-local StateManager = require("lib.StateManager")
-local SceneManager = require("lib.SceneManager")
-local MusicManager = require("music.Manager")
-local Controller = require("lib.Controller")
-local lovelog = require("lib.lovelog")
+local moon = require "moonyscript"
+moon.insert_loader()
+
+local StateManager = require "lib.StateManager"
+local SceneManager = require "lib.SceneManager"
+local MusicManager = require "music.Manager"
+local Controller = require "lib.Controller"
+
+local lovelog = require "lib.lovelog"
+local config = require "config"
 lovelog.disable()
-local config = require("config")
-love.load = function()
+
+function love.load()
   love.window.setTitle("Keyboard wars")
   math.randomseed(os.time())
   if arg[#arg] == "-debug" then
-    require("mobdebug").start()
+    require("moddebug").start()
   end
   StateManager.switch("MainMenu")
-  return love.window.setMode(config.scene_width + config.panel_width, config.scene_height)
+
+  love.window.setMode(config.scene_width + config.panel_width, config.scene_height)
 end
-love.update = function(dt)
+
+function love.update(dt)
   local scene = StateManager:getState()
   if scene then
     scene:update(dt)
   end
-  return MusicManager.update(dt)
+  MusicManager.update(dt)
 end
-love.keypressed = function(key_id)
+
+function love.keypressed(key_id)
   if key_id == "f1" then
     lovelog.toggle()
   end
   key_id = Controller.getActionByKey(key_id)
-  return SceneManager:keypressed(key_id)
+  SceneManager:keypressed(key_id)
 end
-love.keyreleased = function(key_id)
+
+function love.keyreleased(key_id)
   key_id = Controller.getActionByKey(key_id)
-  return SceneManager:keyreleased(key_id)
+  SceneManager:keyreleased(key_id)
 end
-love.draw = function()
-  if not config.settings.graphics then
-    return 
-  end
-  local scene = StateManager:getState()
-  if scene then
-    return scene:draw()
+
+function love.draw()
+  if config.settings.graphics then
+    local scene = StateManager:getState()
+    if scene then
+      scene:draw()
+    end
   end
 end
