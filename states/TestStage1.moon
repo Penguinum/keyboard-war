@@ -207,10 +207,7 @@ class Stage1
       StateManager.pause "PauseMenu"
 
   draw: =>
-    lovelog.reset!
     SceneManager\draw!
-    lovelog.print "FPS: " .. love.timer.getFPS!
-    -- love.graphics.print
 
   leave: =>
     MusicManager.sendEventToTag {tag:"Stage1", event:"stop"}

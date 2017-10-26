@@ -9,11 +9,19 @@ for k, v in pairs binds
   else
     reversed_binds[v] = k
 
+local controller
 controller =
-  pressed: (key) ->
-    key = binds[key] or key
-    return love.keyboard.isDown(key)
+  lock: ->
+    controller.pressed = (key) ->
+      if key == "shift"
+        return love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift")
+  unlock: ->
+    controller.pressed = (key) ->
+      key = binds[key] or key
+      return love.keyboard.isDown(key)
   getActionByKey: (key) ->
     return reversed_binds[key] or key
+
+controller.unlock!
 
 controller

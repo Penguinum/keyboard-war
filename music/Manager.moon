@@ -17,6 +17,8 @@ TrackManager =
 
   sendEventToTag: (args) ->
     assert(args.event and args.tag)
+    if not TrackManager.tags[args.tag]
+      return
     for i, idx in ipairs TrackManager.tags[args.tag]
       TrackManager.tracks[idx][args.event] TrackManager.tracks[idx], args.parameters
 

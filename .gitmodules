@@ -7,3 +7,6 @@
 [submodule "LuaCanSound"]
 	path = LuaCanSound
 	url = https://github.com/Penguinum/LuaCanSound
+[submodule "log.lua"]
+	path = log
+	url = https://github.com/rxi/log.lua

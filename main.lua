@@ -10,6 +10,8 @@ local lovelog = require "lib.lovelog"
 local config = require "config"
 lovelog.disable()
 
+local console = require "lib.console"
+
 function love.load()
   love.window.setTitle("Keyboard wars")
   math.randomseed(os.time())
@@ -32,14 +34,17 @@ end
 function love.keypressed(key_id)
   if key_id == "f1" then
     lovelog.toggle()
+  elseif key_id == "`" then
+    console.open()
   end
-  key_id = Controller.getActionByKey(key_id)
-  SceneManager:keypressed(key_id)
+  local action_key = Controller.getActionByKey(key_id)
+  SceneManager:keypressed(action_key, key_id)
 end
 
 function love.keyreleased(key_id)
-  key_id = Controller.getActionByKey(key_id)
-  SceneManager:keyreleased(key_id)
+  local action_key = Controller.getActionByKey(key_id)
+  action_key = Controller.getActionByKey(key_id)
+  SceneManager:keyreleased(action_key, key_id)
 end
 
 function love.draw()
