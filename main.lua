@@ -5,7 +5,10 @@ local StateManager = require "lib.StateManager"
 local SceneManager = require "lib.SceneManager"
 local MusicManager = require "music.Manager"
 local Controller = require "lib.Controller"
+
+-- Lovedebug
 require "lib.lovedebug"
+_lovedebugpresskey = "~" -- luacheck: ignore
 
 local lovelog = require "lib.lovelog"
 local config = require "config"
