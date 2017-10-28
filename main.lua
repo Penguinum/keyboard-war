@@ -5,12 +5,11 @@ local StateManager = require "lib.StateManager"
 local SceneManager = require "lib.SceneManager"
 local MusicManager = require "music.Manager"
 local Controller = require "lib.Controller"
+require "lib.lovedebug"
 
 local lovelog = require "lib.lovelog"
 local config = require "config"
 lovelog.disable()
-
-local console = require "lib.console"
 
 function love.load()
   love.window.setTitle("Keyboard wars")
@@ -34,8 +33,6 @@ end
 function love.keypressed(key_id)
   if key_id == "f1" then
     lovelog.toggle()
-  elseif key_id == "`" then
-    console.open()
   end
   local action_key = Controller.getActionByKey(key_id)
   SceneManager:keypressed(action_key, key_id)

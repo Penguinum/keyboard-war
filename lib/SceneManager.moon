@@ -9,7 +9,6 @@ lovelog = require "lib.lovelog"
 signal = require "hump.signal"
 colorize = require "lib.colorize"
 config = require "config"
-console = require "lib.console"
 
 enemies = {}
 local player
@@ -76,21 +75,14 @@ SceneManager =
     love.graphics.draw @canvas
     StatsPanel\draw!
     lovelog.print "FPS: " .. love.timer.getFPS!
-    console.draw!
 
 
   keyreleased: (key, rawkey) =>
-    if console.active
-      console.keyreleased rawkey
-      return
     state = StateManager.getState!
     state.keyreleased and state\keyreleased key
     player and player\keyreleased key
 
   keypressed: (key, rawkey) =>
-    if console.active
-      console.keypressed rawkey
-      return
     state = StateManager.getState!
     state.keypressed and state\keypressed key
     player and player\keypressed key
