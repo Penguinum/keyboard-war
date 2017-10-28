@@ -76,7 +76,6 @@ SceneManager =
     StatsPanel\draw!
     lovelog.print "FPS: " .. love.timer.getFPS!
 
-
   keyreleased: (key, rawkey) =>
     state = StateManager.getState!
     state.keyreleased and state\keyreleased key

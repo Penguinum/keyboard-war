@@ -1,5 +1,5 @@
 yoffset = 0
-local disabled
+disabled = true
 
 disable = ->
   disabled = true

@@ -9,10 +9,11 @@ local Controller = require "lib.Controller"
 -- Lovedebug
 require "lib.lovedebug"
 _lovedebugpresskey = "~" -- luacheck: ignore
+_G.StateManager = StateManager
+_G.inspect = require "lib.inspect"
 
 local lovelog = require "lib.lovelog"
 local config = require "config"
-lovelog.disable()
 
 function love.load()
   love.window.setTitle("Keyboard wars")
