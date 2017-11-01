@@ -1,5 +1,5 @@
 StateManager = require "lib.StateManager"
-Matrix = require "states.Matrix"
+Matrix = require "backgrounds.Matrix"
 colorize = require "lib.colorize"
 config = require "config"
 

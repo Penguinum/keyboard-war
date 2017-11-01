@@ -5,11 +5,13 @@ colorize = require "lib.colorize"
 config = require "config"
 import Bullet, BulletManager from require "lib.Bullet"
 import Bomb, BombManager from require "lib.Bomb"
-import graphics from love
 Controller = require "lib.Controller"
 Basechar = require "lib.Basechar"
 HC = require "HCWorld"
 StateManager = require "lib.StateManager"
+PatternManager = require "lib.PatternManager"
+
+import graphics from love
 
 class Player extends Basechar
   initial_bomb_count = 3
@@ -111,9 +113,14 @@ class Player extends Basechar
   keyreleased: (key) =>
     keys_locked = false
 
+  spawnPattern: =>
+    PatternManager.spawn "test", @pos
+
   keypressed: (key) =>
-    if Controller.getActionByKey(key) == "bomb" then
+    if Controller.getActionByKey(key) == "bomb"
       if @bombs > 0
         @explodeBomb!
         @bombs -= 1
         signal.emit "bomb_exploded", {bombs: @bombs}
+    if Controller.getActionByKey(key) == "pattern4debug"
+      @spawnPattern!

@@ -80,6 +80,34 @@ class Bullet
     BulletManager\removeBullet @
 
 
+class BulletConstructor extends Bullet
+  new: (args) =>
+    for k, v in pairs(args)
+      if k ~= "update"
+        @[k] = v
+      else
+        @preupdate = v
+    @color = @color or {0, 0, 255}
+    @hitbox = HC\circle(@pos.x, @pos.y, @rad)
+    if args.type == "good"
+      r = @rad
+      @hitbox = HC\polygon @pos.x - r, @pos.y - r - 7,
+                           @pos.x + r, @pos.y - r - 7,
+                           @pos.x + r, @pos.y + r,
+                           @pos.x - r, @pos.y + r
+    @hitbox.type = args.type or "evil"
+    @hitbox.bullet = @
+    BulletManager\addBullet @
+
+  update: (dt) =>
+    @preupdate dt
+    -- @pos += @speed * dt * @dir
+    @hitbox\moveTo @pos.x, @pos.y
+    print(@pos.x, @pos.y)
+    if @pos.y < 0 or @pos.y > love.graphics.getHeight! or @pos.x < 0 or @pos.x > config.scene_width
+      @remove!
+
+
 class CircleBullet extends Bullet
   new: (args) =>
     super\__init(args)
@@ -103,5 +131,6 @@ class CircleBullet extends Bullet
 {
   :CircleBullet,
   :Bullet,
-  :BulletManager
+  :BulletManager,
+  :BulletConstructor
 }

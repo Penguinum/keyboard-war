@@ -1,4 +1,5 @@
 import BulletManager, Bullet from require "lib.Bullet"
+PatternManager = require "lib.PatternManager"
 Vector = require "hump.vector"
 Boss = require "characters.Boss"
 SimpleEnemy = require "characters.SimpleEnemy"
@@ -58,6 +59,7 @@ SceneManager =
     for enemy, _ in pairs enemies
       enemy\update dt
     player\update dt
+    PatternManager\update dt
     BulletManager\update dt
     StatsPanel\update dt
 
@@ -70,6 +72,7 @@ SceneManager =
     for enemy, _ in pairs enemies
       enemy\draw!
     player\draw!
+    PatternManager\draw!
     BulletManager\draw!
     love.graphics.setCanvas!
     love.graphics.draw @canvas
