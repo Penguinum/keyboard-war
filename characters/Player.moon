@@ -6,7 +6,7 @@ config = require "config"
 import Bullet, BulletManager from require "lib.Bullet"
 import Bomb, BombManager from require "lib.Bomb"
 Controller = require "lib.Controller"
-Basechar = require "lib.Basechar"
+Basechar = require "characters.Base"
 HC = require "HCWorld"
 StateManager = require "lib.StateManager"
 PatternManager = require "lib.PatternManager"
@@ -114,7 +114,12 @@ class Player extends Basechar
     keys_locked = false
 
   spawnPattern: =>
-    PatternManager.spawn "test", @pos
+    PatternManager.spawn "test", {
+      pos: @pos
+      type: "good"
+      color: {100, 100, 100}
+      rad: 10
+    }
 
   keypressed: (key) =>
     if Controller.getActionByKey(key) == "bomb"

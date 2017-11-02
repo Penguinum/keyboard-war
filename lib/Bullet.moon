@@ -101,10 +101,14 @@ class BulletConstructor extends Bullet
 
   update: (dt) =>
     @preupdate dt
-    -- @pos += @speed * dt * @dir
+    if @removed
+      @remove!
+      return
     @hitbox\moveTo @pos.x, @pos.y
     print(@pos.x, @pos.y)
-    if @pos.y < 0 or @pos.y > love.graphics.getHeight! or @pos.x < 0 or @pos.x > config.scene_width
+    morespace = 200
+    if @pos.y < -morespace or @pos.y > love.graphics.getHeight! + morespace or
+       @pos.x < -morespace or @pos.x > config.scene_width + morespace
       @remove!
 
 

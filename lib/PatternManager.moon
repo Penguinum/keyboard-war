@@ -5,16 +5,16 @@ unpack = unpack or table.unpack
 
 Pattern = (pat) ->
   new_pattern = class
-    new: (pos) =>
+    new: (args) =>
       @bullets = {}
       if type pat.spawn == "table"
-        bullets = pat\new {:pos}
+        bullets = pat\new args
         for k, bullet in pairs bullets
           Bullet bullet
   return new_pattern
 
 {
-  spawn: (name, pos) -> Pattern(require("patterns." .. name))(pos)
+  spawn: (name, args) -> Pattern(require("patterns." .. name))(args)
   draw: ->
   update: (dt) ->
 }

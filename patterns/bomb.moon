@@ -9,7 +9,7 @@ Vector = require "hump.vector"
       table.insert ret, @spawn({
         pos: args.pos, type: args.type, rad: args.rad or 5
         type: args.type or "good"
-        color: args.color or {0, 255, 0}
+        color: args.color or {255, 255, 255}
         angle: (i / 180 * math.pi), radius: 15
       })
     ret
@@ -20,7 +20,12 @@ Vector = require "hump.vector"
     type: args.type
     speed: 0
     update: (dt) =>
-      @pos += Vector(0, -@speed)\rotated(@angle)
-      @speed += dt * dt * 500
+      -- if @speed > 200
+      --   @removed = true
+      @pos += Vector(0, -@speed)\rotated(@angle + 0.5 * @speed)
+      @speed += dt * dt * 50
+      @color[1] = math.floor(@speed * 50)
+      @color[2] = math.floor(@speed * 10)
+      @color[3] = math.floor(@speed * 10)
   }
 }

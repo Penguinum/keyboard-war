@@ -7,7 +7,7 @@ local MusicManager = require "music.Manager"
 local Controller = require "lib.Controller"
 
 -- Lovedebug
-require "lib.lovedebug"
+-- require "lib.lovedebug"
 _lovedebugpresskey = "~" -- luacheck: ignore
 _G.StateManager = StateManager
 _G.inspect = require "lib.inspect"

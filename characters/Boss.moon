@@ -9,7 +9,7 @@ import Bullet, CircleBullet from require "lib.Bullet"
 import Mode from require "lib.Modes"
 import graphics, keyboard from love
 Vector = require "hump.vector"
-Basechar = require "lib.Basechar"
+Basechar = require "characters.Base"
 HPBar = require "UI.HPBar"
 HC = require "HCWorld"
 

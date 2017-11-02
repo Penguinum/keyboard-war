@@ -6,6 +6,7 @@ SimpleEnemy = require "characters.SimpleEnemy"
 Player = require "characters.Player"
 StatsPanel = require "UI.StatsPanel"
 StateManager = require "lib.StateManager"
+Moonshine = require "moonshine"
 lovelog = require "lib.lovelog"
 signal = require "hump.signal"
 colorize = require "lib.colorize"
@@ -13,6 +14,9 @@ config = require "config"
 
 enemies = {}
 local player
+
+FX = Moonshine(Moonshine.effects.glow)
+FX.glow.strength = 3
 
 SceneManager =
   canvas: love.graphics.newCanvas config.scene_width, love.graphics.getHeight!
@@ -67,7 +71,8 @@ SceneManager =
     lovelog.reset!
     love.graphics.setCanvas @canvas
     love.graphics.setFont config.fonts.art
-    colorize {10, 10, 10}, -> love.graphics.rectangle "fill", 0, 0, @canvas\getWidth!, @canvas\getHeight!
+    colorize {10, 10, 10}, ->
+      love.graphics.rectangle "fill", 0, 0, @canvas\getWidth!, @canvas\getHeight!
 
     for enemy, _ in pairs enemies
       enemy\draw!
@@ -75,7 +80,8 @@ SceneManager =
     PatternManager\draw!
     BulletManager\draw!
     love.graphics.setCanvas!
-    love.graphics.draw @canvas
+    FX ->
+      love.graphics.draw @canvas
     StatsPanel\draw!
     lovelog.print "FPS: " .. love.timer.getFPS!
 
