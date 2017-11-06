@@ -49,9 +49,10 @@ class Matrix
     colorize {0, 0, 0, @alpha}, -> love.graphics.rectangle "fill", 0, 0,
                                    love.graphics.getWidth!,
                                    love.graphics.getHeight!
-    for _, row in ipairs(@matrix)
-      colorize {20, 80, 20, @alpha}, -> love.graphics.print(table.concat(row), 0, yoffset)
-      yoffset += 15
+    colorize {20, 80, 20, @alpha}, ->
+      for _, row in ipairs(@matrix)
+        love.graphics.print(table.concat(row), 0, yoffset)
+        yoffset += 15
 
   setAlpha: (alpha) =>
     @alpha = alpha
