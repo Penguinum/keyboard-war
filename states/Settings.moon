@@ -1,4 +1,5 @@
 config = require "config"
+fonts = require "resources.fonts"
 import settings from config
 StateManager = require "lib.StateManager"
 colorize = require "lib.colorize"
@@ -24,7 +25,7 @@ class Settings
   menu: menu
   active_node: 1
   draw: =>
-    love.graphics.setFont config.fonts.menu
+    love.graphics.setFont fonts.menu
     x, y = 30, 30
     for i, v in ipairs menu
       colorize (i == @active_node) and {100, 255, 100} or {100, 100, 100}, ->

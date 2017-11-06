@@ -94,12 +94,14 @@ class Player extends Basechar
       speed: 1500,
       dir: Vector 0, -1
       type: "good"
+      color: {255, 255, 255}
     }
     Bullet{
       pos: @pos + Vector(dist, -10),
       speed: 1500,
       dir: Vector 0, -1
       type: "good"
+      color: {255, 255, 255}
     }
 
   explodeBomb: =>

@@ -1,4 +1,4 @@
-config = require "config"
+fonts = require "resources.fonts"
 StateManager = require "lib.StateManager"
 colorize = require "lib.colorize"
 
@@ -14,9 +14,9 @@ class GameOver
     @active_node = 1
 
   draw: =>
-    love.graphics.setFont config.fonts.art_big
+    love.graphics.setFont fonts.art_big
     love.graphics.printf "Game over ლ(ಠ_ಠ ლ)", 30, 50, 300
-    love.graphics.setFont config.fonts.menu
+    love.graphics.setFont fonts.menu
     x, y = 30, 100
     for i = 1, #@menu
       -- love.graphics.getFont()
