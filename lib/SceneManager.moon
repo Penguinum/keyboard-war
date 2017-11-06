@@ -7,6 +7,7 @@ Player = require "characters.Player"
 StatsPanel = require "UI.StatsPanel"
 StateManager = require "lib.StateManager"
 Moonshine = require "moonshine"
+fonts = require "resources.fonts"
 lovelog = require "lib.lovelog"
 signal = require "hump.signal"
 colorize = require "lib.colorize"
@@ -70,7 +71,7 @@ SceneManager =
   draw: =>
     lovelog.reset!
     love.graphics.setCanvas @canvas
-    love.graphics.setFont config.fonts.art
+    love.graphics.setFont fonts.art
     colorize {10, 10, 10}, ->
       love.graphics.rectangle "fill", 0, 0, @canvas\getWidth!, @canvas\getHeight!
 

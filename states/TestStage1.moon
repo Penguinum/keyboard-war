@@ -1,11 +1,10 @@
 SceneManager = require "lib.SceneManager"
 StateManager = require "lib.StateManager"
-MusicManager = require "music.Manager"
-Track = require "music.Track"
+MusicPlayer = require "lib.MusicPlayer"
 Vector = require "hump.vector"
+PatternManager = require "lib.PatternManager"
 import Bullet from require "lib.Bullet"
-lovelog = require "lib.lovelog"
-config = require "config"
+fonts = require "resources.fonts"
 
 enemies = {
   simple1: {
@@ -18,7 +17,6 @@ enemies = {
           pos: @pos + Vector(0, 10)
           speed: math.random(50, 100)
           dir: Vector(0.2*(math.random!-0.5), math.random!)\normalized!
-          char: "*"
         }
   }
   simple2: {
@@ -31,7 +29,6 @@ enemies = {
           pos: @pos + Vector(0, 10)
           speed: math.random(50, 100)
           dir: Vector(0.2*(math.random!-0.5), math.random!)\normalized!
-          char: "*"
         }
   }
   challenging1: {
@@ -45,7 +42,6 @@ enemies = {
         pos: @pos + Vector(0, 10)
         speed: math.random(50, 100)
         dir: Vector(0.2*(math.random!-0.5), math.random!)\normalized!
-        char: "*"
       }
   }
   challenging2: {
@@ -59,12 +55,22 @@ enemies = {
         pos: @pos + Vector(0, 10)
         speed: math.random(50, 100)
         dir: Vector(0.2*(math.random!-0.5), math.random!)\normalized!
-        char: "*"
       }
   }
 }
 --(╬`益´)
 events = {
+  -- {
+  --   time: 0, action: ->
+  --     SceneManager\spawnEnemy {
+  --       pos: Vector(0, 10), text: "LOLCAT", width: 60
+  --       move: (dt) =>
+  --         @pos = @pos + 300 * Vector(1, 0) * dt
+  --       shoot: =>
+  --         if math.random! > 0.97
+  --           PatternManager.spawn "test", @pos
+  --     }
+  -- }
   {
     time: 0, action: ->
       SceneManager\spawnEnemy enemies.simple1
@@ -87,7 +93,6 @@ events = {
               pos: @pos + Vector(0, 20 * i)
               speed: 400 --math.random(50, 100)
               dir: Vector(0, 1)
-              char: "*"
             }
       }
       SceneManager\spawnEnemy {
@@ -100,7 +105,6 @@ events = {
               pos: @pos + Vector(0, 20 * i)
               speed: 400 --math.random(50, 100)
               dir: Vector(0, 1)
-              char: "*"
             }
       }
 
@@ -122,7 +126,6 @@ events = {
               pos: @pos + Vector(20 * i, 0)
               speed: 400 --math.random(50, 100)
               dir: Vector(1, 0)
-              char: "*"
             }
       }
       SceneManager\spawnEnemy {
@@ -135,7 +138,6 @@ events = {
               pos: @pos - Vector(20 * i, 0)
               speed: 400 --math.random(50, 100)
               dir: Vector(-1, 0)
-              char: "*"
             }
       }
   }
@@ -150,7 +152,6 @@ events = {
             pos: @pos + Vector(10, 0)
             speed: 400 --math.random(50, 100)
             dir: Vector(1, 0)
-            char: "*"
           }
       }
       SceneManager\spawnEnemy {
@@ -162,7 +163,6 @@ events = {
             pos: @pos - Vector(10, 0)
             speed: 400 --math.random(50, 100)
             dir: Vector(-1, 0)
-            char: "*"
           }
       }
   }
@@ -180,17 +180,16 @@ class Stage1
   -- canvas = love.graphics.newCanvas love.graphics.getWidth! - 200, love.graphics.getHeight!
   enemy = nil
   events: events
-  music = Track("music/Confusion.ogg")\set{fadein:1, fadeout:1}
 
   new: =>
-    MusicManager.addTrack {track:music, alias:"Stage1", tag:"Stage1"}
+    MusicPlayer.addTrack {name:"Confusion", alias:"Stage1", tag:"Stage1"}
 
   enter: =>
     @time = 0
     @current_event = 1
-    love.graphics.setFont config.fonts.art
+    love.graphics.setFont fonts.art
     SceneManager\spawnPlayer Vector(0.5, 0.9)
-    MusicManager.sendEventToTag {tag:"Stage1", event:"play"}
+    MusicPlayer.sendEventToTag {tag:"Stage1", event:"play"}
     -- SceneManager\spawnBoss Vector(0.5, 0.05)
 
   update: (dt) =>
@@ -203,11 +202,11 @@ class Stage1
 
   keypressed: (key) =>
     if key == "escape"
-      MusicManager.sendEventToTag {tag:"Stage1", event:"pause"}
+      MusicPlayer.sendEventToTag {tag:"Stage1", event:"pause"}
       StateManager.pause "PauseMenu"
 
   draw: =>
     SceneManager\draw!
 
   leave: =>
-    MusicManager.sendEventToTag {tag:"Stage1", event:"stop"}
+    MusicPlayer.sendEventToTag {tag:"Stage1", event:"stop"}

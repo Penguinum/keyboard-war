@@ -1,5 +1,6 @@
 colorize = require "lib.colorize"
-config = require "config"
+fonts = require "resources.fonts"
+love = love
 
 class Matrix
   update_time: 0.03
@@ -28,7 +29,7 @@ class Matrix
     return ret
 
   update: (dt) =>
-    love.graphics.setFont config.fonts.art
+    love.graphics.setFont fonts.art
     @overall_time += dt
     -- if @overall_time > 2
     --   @stop!
@@ -45,9 +46,11 @@ class Matrix
 
   draw: =>
     yoffset = 0
-    colorize {0, 0, 0, @alpha}, -> love.graphics.rectangle "fill", 0, 0, love.graphics.getWidth!, love.graphics.getHeight!
+    colorize {0, 0, 0, @alpha}, -> love.graphics.rectangle "fill", 0, 0,
+                                   love.graphics.getWidth!,
+                                   love.graphics.getHeight!
     for _, row in ipairs(@matrix)
-      colorize {20, 80, 20, @alpha}, -> love.graphics.print table.concat(row), 0, yoffset
+      colorize {20, 80, 20, @alpha}, -> love.graphics.print(table.concat(row), 0, yoffset)
       yoffset += 15
 
   setAlpha: (alpha) =>

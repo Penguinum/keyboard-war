@@ -3,7 +3,7 @@ moon.insert_loader()
 
 local StateManager = require "lib.StateManager"
 local SceneManager = require "lib.SceneManager"
-local MusicManager = require "music.Manager"
+local MusicManager = require "lib.MusicPlayer"
 local Controller = require "lib.Controller"
 
 -- Lovedebug

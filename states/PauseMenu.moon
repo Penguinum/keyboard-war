@@ -1,21 +1,21 @@
-config = require "config"
 StateManager = require "lib.StateManager"
 SceneManager = require "lib.SceneManager"
-MusicManager = require "music.Manager"
+MusicPlayer = require "lib.MusicPlayer"
 colorize = require "lib.colorize"
+fonts = require "resources.fonts"
 
 menu = {
   {
     id: "continue", text: "Continue"
     action: ->
-      MusicManager.sendEventToTag {tag:"Stage1", event:"resume"}
+      MusicPlayer.sendEventToTag {tag:"Stage1", event:"resume"}
       StateManager.resume!
   }
   {
     id: "mainmenu", text: "Return to main menu"
     action: ->
       SceneManager.clear!
-      MusicManager.sendEventToTag {tag:"Stage1", event:"stop"}
+      MusicPlayer.sendEventToTag {tag:"Stage1", event:"stop"}
       StateManager.switch "MainMenu"
   }
   { id: "exit", text: "Exit", action: -> love.event.quit(0)}
@@ -27,9 +27,9 @@ class PauseMenu
     @active_node = 1
 
   draw: =>
-    love.graphics.setFont config.fonts.art_big
+    love.graphics.setFont fonts.art_big
     love.graphics.printf "Paused (　’ω’)旦~~", 30, 50, 300
-    love.graphics.setFont config.fonts.menu
+    love.graphics.setFont fonts.menu
     x, y = 30, 100
     for i = 1, #@menu
       -- love.graphics.getFont()
@@ -42,7 +42,7 @@ class PauseMenu
 
   keypressed: (key_id) =>
     if key_id == "escape"
-      MusicManager.sendEventToTag {tag:"Stage1", event:"resume"}
+      MusicPlayer.sendEventToTag {tag:"Stage1", event:"resume"}
       StateManager.resume!
     elseif key_id == "down"
       @active_node += 1

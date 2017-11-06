@@ -1,5 +1,6 @@
 StateManager = require "lib.StateManager"
 Matrix = require "backgrounds.Matrix"
+fonts = require "resources.fonts"
 colorize = require "lib.colorize"
 config = require "config"
 
@@ -34,7 +35,7 @@ class MainMenu
       @menu[@active_node].action!
 
   update: (dt) =>
-    love.graphics.setFont config.fonts.menu
+    love.graphics.setFont fonts.menu
     @matrix\update dt
 
   draw: () =>

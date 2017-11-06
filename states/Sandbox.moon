@@ -3,14 +3,14 @@ StateManager = require "lib.StateManager"
 Vector = require "hump.vector"
 import Bullet from require "lib.Bullet"
 lovelog = require "lib.lovelog"
-config = require "config"
+fonts = require "resources.fonts"
 
 class Stage1
   -- canvas = love.graphics.newCanvas love.graphics.getWidth! - 200, love.graphics.getHeight!
   enter: =>
     @time = 0
     @current_event = 1
-    love.graphics.setFont config.fonts.art
+    love.graphics.setFont fonts.art
     SceneManager\spawnPlayer Vector(0.5, 0.9)
     -- SceneManager\spawnBoss Vector(0.5, 0.05)
 

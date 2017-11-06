@@ -1,5 +1,6 @@
 colorize = require "lib.colorize"
 config = require "config"
+fonts = require "resources.fonts"
 signal = require "hump.signal"
 import graphics from love
 
@@ -13,12 +14,12 @@ StatsPanel =
   bombs: 0
 
   draw: =>
-    love.graphics.setFont config.fonts.art_big
+    love.graphics.setFont fonts.art_big
     love.graphics.setCanvas @canvas
     colorize {20, 20, 20}, -> graphics.rectangle "fill", 0, 0, @canvas\getWidth!, @canvas\getHeight!
     graphics.printf "Lives: " .. drawline(@lives), 10, 10, 200
     graphics.printf "Bombs: " .. drawline(@bombs), 10, 30, 200
-    love.graphics.setFont config.fonts.art
+    love.graphics.setFont fonts.art
     graphics.printf "Move: left, up, top, bottom", 10, 100, 200
     graphics.printf "Precise move/concentrate: ctrl/shift", 10, 130, 200
     love.graphics.printf "Shoot: z", 10, 160, 200

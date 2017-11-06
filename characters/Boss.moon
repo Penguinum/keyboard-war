@@ -3,7 +3,7 @@ signal = require "hump.signal"
 lovelog = require "lib.lovelog"
 config = require "config"
 local SceneManager
-MusicManager = require "music.Manager"
+MusicPlayer = require "lib.MusicPlayer"
 StateManager = require "lib.StateManager"
 import Bullet, CircleBullet from require "lib.Bullet"
 import Mode from require "lib.Modes"
@@ -36,7 +36,7 @@ death = Mode{
       if @circle_bullets_dt >= 0.2
         if not @exploded
           love.audio.newSource("sfx/boss_explosion.ogg")\play!
-          MusicManager.sendEventToTag {tag: "Stage1", event: "stop", parameters: 4}
+          MusicPlayer.sendEventToTag {tag: "Stage1", event: "stop", parameters: 4}
           @exploded = true
         @circle_bullets_dt = 0
         @spawnCircleBullets{
