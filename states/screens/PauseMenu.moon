@@ -16,7 +16,7 @@ menu = {
     action: ->
       SceneManager.clear!
       MusicPlayer.sendEventToTag {tag:"Stage1", event:"stop"}
-      StateManager.switch "MainMenu"
+      StateManager.switch{ screen: "MainMenu" }
   }
   { id: "exit", text: "Exit", action: -> love.event.quit(0)}
 }

@@ -201,9 +201,6 @@ class Stage1
       event.action!
 
   keypressed: (key) =>
-    if key == "escape"
-      MusicPlayer.sendEventToTag {tag:"Stage1", event:"pause"}
-      StateManager.pause "PauseMenu"
 
   draw: =>
     SceneManager\draw!

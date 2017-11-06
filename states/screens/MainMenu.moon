@@ -2,12 +2,20 @@ StateManager = require "lib.StateManager"
 Matrix = require "backgrounds.Matrix"
 fonts = require "resources.fonts"
 colorize = require "lib.colorize"
-config = require "config"
 
 menu = {
-  { id: "dev sandbox", text: "Dev sandbox", action: -> StateManager.switch "Sandbox" }
-  { id: "play", text: "Play", action: -> StateManager.switch "TestStage1" }
-  { id: "settings", text: "Settings", action: -> StateManager.switch "Settings" }
+  { id: "dev sandbox", text: "Dev sandbox", action: -> StateManager.switch{
+      stage: "Sandbox"
+    }
+  }
+  { id: "play", text: "Play", action: -> StateManager.switch{
+      stage: "TestStage1"
+    }
+  }
+  { id: "settings", text: "Settings", action: -> StateManager.switch{
+      screen: "Settings"
+    }
+  }
   { id: "exit", text: "Exit", action: -> love.event.quit(0) }
 }
 

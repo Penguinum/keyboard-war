@@ -6,6 +6,7 @@ SimpleEnemy = require "characters.SimpleEnemy"
 Player = require "characters.Player"
 StatsPanel = require "UI.StatsPanel"
 StateManager = require "lib.StateManager"
+MusicPlayer = require "lib.MusicPlayer"
 Moonshine = require "moonshine"
 fonts = require "resources.fonts"
 lovelog = require "lib.lovelog"
@@ -89,12 +90,18 @@ SceneManager =
   keyreleased: (key, rawkey) =>
     state = StateManager.getState!
     state.keyreleased and state\keyreleased key
-    player and player\keyreleased key
+    if StateManager.PLAYABLE_STATE
+      player and player\keyreleased key
 
   keypressed: (key, rawkey) =>
+    if StateManager.PLAYABLE_STATE and key == "escape"
+      MusicPlayer.sendEvent {tag:"Stage1", event:"pause"}
+      StateManager.switch {screen: "PauseMenu", pause: true}
+      return
     state = StateManager.getState!
     state.keypressed and state\keypressed key
-    player and player\keypressed key
+    if StateManager.PLAYABLE_STATE
+      player and player\keypressed key
 
 signal.register "dead", (obj) ->
   SceneManager\removeEnemy obj

@@ -94,6 +94,10 @@ MusicPlayer =
       table.insert(MusicPlayer.tags[args.tag], #MusicPlayer.tracks)
     return MusicPlayer
 
+  sendEvent: (args) ->
+    for k, track in pairs MusicPlayer.tracks
+      track[args.event] track, args.parameters
+
   sendEventToTag: (args) ->
     assert(args.event and args.tag)
     if not MusicPlayer.tags[args.tag]

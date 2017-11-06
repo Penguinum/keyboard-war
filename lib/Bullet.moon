@@ -105,7 +105,6 @@ class BulletConstructor extends Bullet
       @remove!
       return
     @hitbox\moveTo @pos.x, @pos.y
-    print(@pos.x, @pos.y)
     morespace = 200
     if @pos.y < -morespace or @pos.y > love.graphics.getHeight! + morespace or
        @pos.x < -morespace or @pos.x > config.scene_width + morespace

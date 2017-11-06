@@ -5,7 +5,7 @@ import Bullet from require "lib.Bullet"
 lovelog = require "lib.lovelog"
 fonts = require "resources.fonts"
 
-class Stage1
+class Stage
   -- canvas = love.graphics.newCanvas love.graphics.getWidth! - 200, love.graphics.getHeight!
   enter: =>
     @time = 0
@@ -17,13 +17,6 @@ class Stage1
   update: (dt) =>
     SceneManager\update dt
     @time += dt
-    if event and @time >= event.time
-      @current_event += 1
-      event.action!
-
-  keypressed: (key) =>
-    if key == "escape"
-      StateManager.pause "PauseMenu"
 
   draw: =>
     SceneManager\draw!

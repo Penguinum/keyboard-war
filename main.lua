@@ -21,7 +21,7 @@ function love.load()
   if arg[#arg] == "-debug" then
     require("moddebug").start()
   end
-  StateManager.switch("MainMenu")
+  StateManager.switch{ screen = "MainMenu" }
 
   love.window.setMode(config.scene_width + config.panel_width, config.scene_height)
 end

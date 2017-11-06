@@ -1,30 +1,33 @@
+--- Switches gamestates
+
 gamestate = require "hump.gamestate"
 
 local switcher
-
-States = {}
 local previousStateId, currentStateId, currentState, previousState
 
-getState = (id) -> States[id] or require("states." .. id)!
+getStage = (id) ->
+  stage = require("states.stages." .. id)!
+  stage.isStage = true
+  return stage
+getScreen = (id) -> require("states.screens." .. id)!
 
 switcher =
-  switch: (id) ->
+  --- Switch to some game state (screen or stage)
+  -- @param args -- table {screen or stage: stage/screen id, [pause: is pause menu]}
+  -- if pause menu then previous state will be drawn (maybe) but not updated
+  switch: (args) ->
     previousStateId = currentStateId
-    currentStateId = id
+    currentStateId = args.screen or args.stage
     previousState = currentState
-    currentState = getState id
-    gamestate.switch currentState
+    currentState = (args.screen and getScreen or getStage)(currentStateId)
+    (args.pause and gamestate.push or gamestate.switch)(currentState)
+    switcher.PLAYABLE_STATE = args.stage and true -- TODO Replace with better solution
 
-  pause: (id) ->
-    previousStateId = currentStateId
-    currentStateId = id
-    previousState = currentState
-    currentState = getState id
-    gamestate.push currentState
-
+  --- Resume paused game state (in case we have it)
   resume: ->
     currentStateId = previousStateId
     currentState = previousState
+    switcher.PLAYABLE_STATE = currentState.isStage
     gamestate.pop!
 
   getPreviousStateId: ->
@@ -34,11 +37,10 @@ switcher =
     return currentStateId
 
   getStateById: (id) ->
-    return getState id
+    return getStage id
 
   getState: ->
     return currentState
-
 
 gamestate.registerEvents!
 

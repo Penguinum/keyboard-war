@@ -17,7 +17,7 @@ menu = {
     text: "Back"
     keypressed: (key) =>
       if key == "shoot"
-        StateManager.switch "MainMenu"
+        StateManager.switch{ screen: "MainMenu" }
   }
 }
 
