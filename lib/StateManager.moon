@@ -36,9 +36,6 @@ switcher =
   getCurrentStateId: ->
     return currentStateId
 
-  getStateById: (id) ->
-    return getStage id
-
   getState: ->
     return currentState
 
