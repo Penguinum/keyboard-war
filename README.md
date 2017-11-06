@@ -3,7 +3,8 @@ Bullet hell game with kaomoji-based characters. Early pre-pre-alpha stage.
 
 ## TODO
 * [x] Playable prototype
-* [ ] Code cleanup
+* [x] Code cleanup
+* [ ] Start using a level editor (Tiled?)
 * [ ] More playable prototype
 * [ ] More enemies and bullet types
 * [ ] More levels
