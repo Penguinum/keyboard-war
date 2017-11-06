@@ -56,7 +56,7 @@ death = Mode{
         @circle_bullets_da += 1
 
     elseif tt > 5
-      StateManager.switch "YouWin"
+      StateManager.switch { screen: "YouWin" }
       SceneManager = require "lib.SceneManager"
       SceneManager\clear!
 

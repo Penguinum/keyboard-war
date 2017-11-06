@@ -3,8 +3,12 @@ StateManager = require "lib.StateManager"
 colorize = require "lib.colorize"
 
 menu = {
-  { id: "tryagain", text: "Try again", action: -> StateManager.switch "TestStage1"}
-  { id: "mainmenu", text: "Return to main menu", action: -> StateManager.switch "MainMenu"}
+  { id: "tryagain", text: "Try again",
+    action: -> StateManager.switch { stage: "TestStage1" }
+  }
+  { id: "mainmenu", text: "Return to main menu",
+    action: -> StateManager.switch { screen: "MainMenu" }
+  }
   { id: "exit", text: "Exit", action: -> love.event.quit(0)}
 }
 
