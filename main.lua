@@ -5,6 +5,7 @@ local StateManager = require "lib.StateManager"
 local SceneManager = require "lib.SceneManager"
 local MusicManager = require "lib.MusicPlayer"
 local Controller = require "lib.Controller"
+local CScreen = require "lib.CScreen"
 
 -- Lovedebug
 -- require "lib.lovedebug"
@@ -23,7 +24,8 @@ function love.load()
   end
   StateManager.switch{ screen = "MainMenu" }
 
-  love.window.setMode(config.scene_width + config.panel_width, config.scene_height)
+  love.window.setMode(config.screen_width, config.screen_height)
+  CScreen.init(config.screen_width, config.screen_height, true)
 end
 
 function love.update(dt)
@@ -39,20 +41,28 @@ function love.keypressed(key_id)
     lovelog.toggle()
   end
   local action_key = Controller.getActionByKey(key_id)
-  SceneManager:keypressed(action_key, key_id)
+  local state = StateManager.getState()
+  if state.keypressed then
+    state:keypressed(action_key, key_id)
+  end
 end
 
 function love.keyreleased(key_id)
-  local action_key = Controller.getActionByKey(key_id)
-  action_key = Controller.getActionByKey(key_id)
-  SceneManager:keyreleased(action_key, key_id)
+  local state = StateManager.getState()
+  if state.keyreleased then
+    local action_key = Controller.getActionByKey(key_id)
+    action_key = Controller.getActionByKey(key_id)
+    state:keyreleased(action_key, key_id)
+  end
 end
 
 function love.draw()
+  CScreen.apply()
   if config.settings.graphics then
     local scene = StateManager:getState()
     if scene then
       scene:draw()
     end
   end
+  CScreen.cease()
 end

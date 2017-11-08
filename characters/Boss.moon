@@ -1,7 +1,7 @@
 vector = require "hump.vector"
 signal = require "hump.signal"
 lovelog = require "lib.lovelog"
-config = require "config"
+const = require "const"
 local SceneManager
 MusicPlayer = require "lib.MusicPlayer"
 StateManager = require "lib.StateManager"
@@ -17,7 +17,7 @@ death = Mode{
   id: "death"
   init_func: () =>
     @exploded = nil
-    cx = config.scene_width/2
+    cx = const.scene_width/2
     @diff_pos = vector(cx, @pos.y) - @pos
     @income_pos = @pos
     @circle_bullets_dt = 0
@@ -25,12 +25,12 @@ death = Mode{
 
   update_func: (dt, tt) =>
     if tt < 1
-      cx = config.scene_width/2
+      cx = const.scene_width/2
       @direction = (@pos.x > cx) and "left" or "right"
       @text = @texts[@direction]
       @pos = @income_pos - tt*tt*@diff_pos + tt*2*@diff_pos
     elseif tt < 2
-      @pos = vector(config.scene_width/2, @pos.y)
+      @pos = vector(const.scene_width/2, @pos.y)
       @circle_bullets_dt += dt
       @text = ""
       if @circle_bullets_dt >= 0.2
@@ -96,8 +96,8 @@ walk = Mode{
     if @pos.x < 0
       @pos.x = 0
       @direction = "right"
-    elseif @pos.x > config.scene_width
-      @pos.x = config.scene_width
+    elseif @pos.x > const.scene_width
+      @pos.x = const.scene_width
       @direction = "left"
     if tt > 4
       @mode = "rage"
@@ -110,19 +110,19 @@ rage = Mode{
     @circle_bullets_dt = 0
     @circle_bullets_da = 0
     --@pos.x = 0
-    cx = config.scene_width/2
+    cx = const.scene_width/2
     @diff_pos = vector(cx, @pos.y) - @pos
     @income_pos = @pos
 
   update_func: (dt, tt) =>
     if tt < 1
-      cx = config.scene_width/2
+      cx = const.scene_width/2
       -- print "pos.x", pos.x, "cx", cx, "next mode", @next_mode
       @direction = (@pos.x > cx) and "left" or "right"
       @text = @texts[@direction]
       @pos = @income_pos - tt*tt*@diff_pos + tt*2*@diff_pos
     else
-      @pos = vector(config.scene_width/2, @pos.y)
+      @pos = vector(const.scene_width/2, @pos.y)
       @circle_bullets_dt += dt
       if @circle_bullets_dt >= 0.15
         @circle_bullets_dt = 0
@@ -199,7 +199,7 @@ class Enemy extends Basechar
   spawnCircleBullets: (args) =>
     for i = 0, args.n-1
       a = i*(math.pi*2)/args.n
-      cx, cy, r, a = config.scene_width/2, @pos.y, 1, a + args.da
+      cx, cy, r, a = const.scene_width/2, @pos.y, 1, a + args.da
       CircleBullet{
         center_pos: Vector(cx, cy)
         r_spawn: r
@@ -225,7 +225,7 @@ class Enemy extends Basechar
     bullet.update = (dt) =>
       @pos += @speed * dt * @dir
       @hitbox\moveTo @pos.x, @pos.y
-      if @pos.y < 0 or @pos.y > config.scene_height or @pos.x < 0 or @pos.x > config.scene_width
+      if @pos.y < 0 or @pos.y > const.scene_height or @pos.x < 0 or @pos.x > const.scene_width
         @remove!
 
   draw: =>

@@ -1,14 +1,15 @@
 --- Switches gamestates
-
 gamestate = require "hump.gamestate"
 
 local switcher
 local previousStateId, currentStateId, currentState, previousState
 
 getStage = (id) ->
-  stage = require("states.stages." .. id)!
-  stage.isStage = true
-  return stage
+  scene = require("states.stages." .. id)!
+  SceneManager = require "lib.SceneManager"
+  sceneManager = SceneManager {:scene}
+  sceneManager.isStage = true
+  return sceneManager
 getScreen = (id) -> require("states.screens." .. id)!
 
 switcher =

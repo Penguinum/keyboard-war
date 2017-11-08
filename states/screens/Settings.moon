@@ -13,6 +13,13 @@ menu = {
       return "Graphics: " .. (settings.graphics and "on" or "off")
   }
   {
+    id: "res"
+    keypressed: (key) =>
+      settings.graphics = not settings.graphics
+    getText: =>
+      return "Resolution: " .. (settings.graphics and "on" or "off")
+  }
+  {
     id: "back"
     text: "Back"
     keypressed: (key) =>

@@ -12,31 +12,36 @@ fonts = require "resources.fonts"
 lovelog = require "lib.lovelog"
 signal = require "hump.signal"
 colorize = require "lib.colorize"
-config = require "config"
-
-enemies = {}
-local player
+const = require "const"
 
 FX = Moonshine(Moonshine.effects.glow)
 FX.glow.strength = 3
 
-SceneManager =
-  canvas: love.graphics.newCanvas config.scene_width, love.graphics.getHeight!
+class SceneManager
+  enemies = {}
+  player = nil
+  canvas: love.graphics.newCanvas const.scene_width, love.graphics.getHeight!
+
+  new: (args) =>
+    @statsPanel = StatsPanel { width: 200, height: 600}
+    @scene = args.scene
+    @spawnPlayer!
+
+    signal.register "dead", (obj) ->
+      SceneManager\removeEnemy obj
 
   addEnemy: (e) =>
     enemies[e] = true
 
   spawnPlayer: (pos) =>
-    pos_x = pos.x * config.scene_width
-    pos_y = pos.y * config.scene_height
     player = Player!
-    player\setPos pos_x, pos_y
+    player\setPos const.scene_width * 0.5, const.scene_height * 0.9
 
   spawnBoss: (args) =>
-    pos_x = args.pos.x * config.scene_width
-    pos_y = args.pos.y * config.scene_height
-    income_pos_x = args.income_pos.x * config.scene_width
-    income_pos_y = args.income_pos.y * config.scene_height
+    pos_x = args.pos.x * const.scene_width
+    pos_y = args.pos.y * const.scene_height
+    income_pos_x = args.income_pos.x * const.scene_width
+    income_pos_y = args.income_pos.y * const.scene_height
     boss = Boss{
       pos: Vector(pos_x, pos_y)
       income_pos: Vector(income_pos_x, income_pos_y)
@@ -67,7 +72,9 @@ SceneManager =
     player\update dt
     PatternManager\update dt
     BulletManager\update dt
-    StatsPanel\update dt
+    @statsPanel\update dt
+    if @scene.update
+      @scene\update!
 
   draw: =>
     lovelog.reset!
@@ -84,12 +91,12 @@ SceneManager =
     love.graphics.setCanvas!
     FX ->
       love.graphics.draw @canvas
-    StatsPanel\draw!
+    @statsPanel\draw!
     lovelog.print "FPS: " .. love.timer.getFPS!
+    if @scene.draw
+      @scene\draw!
 
   keyreleased: (key, rawkey) =>
-    state = StateManager.getState!
-    state.keyreleased and state\keyreleased key
     if StateManager.PLAYABLE_STATE
       player and player\keyreleased key
 
@@ -98,12 +105,7 @@ SceneManager =
       MusicPlayer.sendEvent {tag:"Stage1", event:"pause"}
       StateManager.switch {screen: "PauseMenu", pause: true}
       return
-    state = StateManager.getState!
-    state.keypressed and state\keypressed key
     if StateManager.PLAYABLE_STATE
       player and player\keypressed key
-
-signal.register "dead", (obj) ->
-  SceneManager\removeEnemy obj
 
 return SceneManager

@@ -2,7 +2,7 @@ lovelog = require "lib.lovelog"
 vector = require "hump.vector"
 colorize = require "lib.colorize"
 signal = require "hump.signal"
-config = require "config"
+const = require "const"
 HC = require "HCWorld"
 import graphics from love
 
@@ -66,12 +66,12 @@ class Bullet
   update: (dt) =>
     @pos += @speed * dt * @dir
     @hitbox\moveTo @pos.x, @pos.y
-    if @pos.y < 0 or @pos.y > love.graphics.getHeight! or @pos.x < 0 or @pos.x > config.scene_width
+    if @pos.y < 0 or @pos.y > love.graphics.getHeight! or @pos.x < 0 or @pos.x > const.scene_width
       @remove!
 
   draw: =>
     colorize @color, -> graphics.circle "fill", @pos.x, @pos.y, @rad
-    if config.debug
+    if const.debug
       @hitbox\draw!
     -- graphics.printf s@char, @pos.x - @rad, @pos.y - @rad, 2 * @rad, "center"
 
@@ -107,7 +107,7 @@ class BulletConstructor extends Bullet
     @hitbox\moveTo @pos.x, @pos.y
     morespace = 200
     if @pos.y < -morespace or @pos.y > love.graphics.getHeight! + morespace or
-       @pos.x < -morespace or @pos.x > config.scene_width + morespace
+       @pos.x < -morespace or @pos.x > const.scene_width + morespace
       @remove!
 
 
@@ -127,7 +127,7 @@ class CircleBullet extends Bullet
     @speed += @ac
     @pos = @center_pos + @r_vector
     @hitbox\moveTo @pos.x, @pos.y
-    scene_corner = vector(0, config.scene_height)
+    scene_corner = vector(0, const.scene_height)
     dr = scene_corner - @center_pos
     if dr\toPolar!["y"] < @r_vector\toPolar!["y"]
       @remove!
