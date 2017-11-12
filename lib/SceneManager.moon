@@ -74,7 +74,7 @@ class SceneManager
     BulletManager\update dt
     @statsPanel\update dt
     if @scene.update
-      @scene\update!
+      @scene\update dt
 
   draw: =>
     lovelog.reset!

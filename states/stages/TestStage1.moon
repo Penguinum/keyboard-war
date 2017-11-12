@@ -1,8 +1,6 @@
 SceneManager = require "lib.SceneManager"
-StateManager = require "lib.StateManager"
 MusicPlayer = require "lib.MusicPlayer"
 Vector = require "hump.vector"
-PatternManager = require "lib.PatternManager"
 import Bullet from require "lib.Bullet"
 fonts = require "resources.fonts"
 
@@ -178,22 +176,18 @@ events = {
 
 class Stage1
   -- canvas = love.graphics.newCanvas love.graphics.getWidth! - 200, love.graphics.getHeight!
-  enemy = nil
   events: events
+  time: 0
 
   new: =>
     MusicPlayer.addTrack {name:"Confusion", alias:"Stage1", tag:"Stage1"}
-
-  enter: =>
     @time = 0
     @current_event = 1
     love.graphics.setFont fonts.art
-    SceneManager\spawnPlayer Vector(0.5, 0.9)
     MusicPlayer.sendEventToTag {tag:"Stage1", event:"play"}
     -- SceneManager\spawnBoss Vector(0.5, 0.05)
 
   update: (dt) =>
-    SceneManager\update dt
     @time += dt
     event = @events[@current_event]
     if event and @time >= event.time
@@ -203,7 +197,6 @@ class Stage1
   keypressed: (key) =>
 
   draw: =>
-    SceneManager\draw!
 
   leave: =>
     MusicPlayer.sendEventToTag {tag:"Stage1", event:"stop"}

@@ -1,6 +1,7 @@
 colorize = require "lib.colorize"
 signal = require "hump.signal"
 config = require "config"
+const = require "const"
 import graphics from love
 
 class HPBar
@@ -11,7 +12,7 @@ class HPBar
     percentage = math.max(0, hp*100/max_hp)
   draw: =>
     -- love.graphics.getHeight!
-    total_width = config.scene_width-shift*2
+    total_width = const.scene_width-shift*2
     hp_width = total_width*percentage/100
     -- print percentage
     colorize {0, 0, 0}, -> graphics.rectangle "fill", shift, 0, total_width, 6
