@@ -13,16 +13,16 @@ class StatsPanel
 
   new: (args) =>
     @setSize(args.width, args.height)
-    signal.register "bomb_exploded", (arg) ->
-      StatsPanel.bombs = arg.bombs
+    signal.register "bomb_exploded", (playerstate) ->
+      @bombs = playerstate.bombs
 
-    signal.register "player_meets_bullet", (arg) ->
-      StatsPanel.lives = arg.lives
-      StatsPanel.bombs = arg.bombs
+    signal.register "player_meets_bullet", (playerstate) ->
+      @lives = playerstate.lives
+      @bombs = playerstate.bombs
 
-    signal.register "update_player_info", (arg) ->
-      StatsPanel.lives = arg.lives
-      StatsPanel.bombs = arg.bombs
+    signal.register "update_player_info", (playerstate) ->
+      @lives = playerstate.lives
+      @bombs = playerstate.bombs
 
   setSize: (w, h) =>
     @width = w
