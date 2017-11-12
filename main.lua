@@ -66,3 +66,5 @@ function love.draw()
   end
   CScreen.cease()
 end
+
+love.errhand = require "util.errhand"
