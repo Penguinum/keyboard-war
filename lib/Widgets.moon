@@ -12,7 +12,7 @@ setSize = (obj, panel, args) ->
   if not args.width
     left = args.left
     width = panel_w - args.right - args.left
-  elseif not args.left
+  elseif not args.left and args.right
     left = panel_w - args.right - args.width
     width = args.width
   else
@@ -22,7 +22,7 @@ setSize = (obj, panel, args) ->
   if not args.height
     top = args.top
     height = panel_h - args.bottom - args.top
-  elseif not args.top
+  elseif not args.top and args.bottom
     top = panel_h - args.bottom - args.height
     height = args.height
   else
@@ -31,49 +31,42 @@ setSize = (obj, panel, args) ->
   obj\SetPos(left, top)
   obj\SetSize(width, height)
 
-panel = (args, frame) ->
-  p = LF.Create("panel", frame)
-  setSize(p, frame, args)
+panel = (args, parent) ->
+  p = LF.Create("panel", parent)
+  setSize(p, parent, args)
   return p
 
 frame = (args) ->
-  frame = LF.Create("frame")
-  setSize(frame, nil, args)
-  return frame
+  obj = LF.Create("frame")
+  setSize(obj, nil, args)
+  return obj
 
-button = (args, frame) ->
-  button = LF.Create("button", frame)
-  setSize(button, frame, args)
+button = (args, parent) ->
+  button = LF.Create("button", parent)
+  setSize(button, parent, args)
   button\SetText(args.text)
   button.OnClick = args.OnClick
   return button
 
 alert = (message) ->
-  frame = LF.Create("frame")
-  frame\SetModal(true)
-  frame\SetSize(400, 200)
-  text = LF.Create("text", frame)
+  _frame = LF.Create("frame")
+  _frame\SetModal(true)
+  _frame\SetSize(400, 200)
+  text = LF.Create("text", _frame)
   text\SetText(message)
   text\SetPos(10, 30)
   text\SetSize(380, 140)
-  button = LF.Create("button", frame)
+  button = LF.Create("button", _frame)
   button\SetText("OK")
   button\SetPos(10, 170)
   button\SetSize(380, 20)
   button.OnClick = =>
-    frame\Remove!
-  frame\Center!
+    _frame\Remove!
+  _frame\Center!
 
-popup = (content) ->
-  frame = (frame {
-    left: 0, right: 0, top: 0, bottom: 0, modal: true
-  })!
-  frame\SetModal(true)
-  content(frame)
-
-canvas = (args, frame) ->
-  p = LF.Create("image", frame)
-  setSize(p, frame, args)
+canvas = (args, parent) ->
+  p = LF.Create("image", parent)
+  setSize(p, parent, args)
   cnv = love.graphics.newCanvas(p\GetSize!)
   love.graphics.setCanvas(cnv)
   colorize {0, 0, 0}, ->
@@ -88,6 +81,7 @@ menu = (args) ->
 
 {
   :panel
+  :frame
   :button
   :alert
   :canvas

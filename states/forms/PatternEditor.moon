@@ -1,8 +1,7 @@
-Widgets = require "lib.Widgets"
 UI = require "lib.UI"
 colorize = require "lib.colorize"
 
-export layout = {
+layout = {
   "panel",
   left: 0, right: 0, top: 0, bottom: 0
   content: {
@@ -19,7 +18,16 @@ export layout = {
           left: 10, right: 10, bottom: 10, height: 20
           text: "Hello void"
           OnClick: =>
-            Widgets.alert("Hello void")
+            UI.popup {
+              "frame",
+              center: true, height: 200, width: 300
+              content: {
+                layout: {
+                  "button", left: 10, right: 10, top: 30, height: 20
+                  text: "some text"
+                }
+              }
+            }
         }
         button_world: {
           "button"

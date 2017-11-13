@@ -2,9 +2,6 @@ Widgets = require "lib.Widgets"
 LF = require "LoveFrames"
 unpack = unpack or table.unpack
 
-WidgetConstructor = (func) ->
-  setmetatable {widget: true}, {__call: ((frame) => func frame)}
-
 widget_map = {}
 
 local UI
@@ -16,10 +13,15 @@ UI =
       current_widget = Widgets[current_widget_desc[1]] current_widget_desc, root
       if current_widget_desc.id
         widget_map[current_widget_desc.id] = current_widget
+      if current_widget_desc.center
+        current_widget\Center!
     if not current_widget_desc.content
       return
     for k, widget in pairs(current_widget_desc.content)
       UI.load widget, current_widget
+
+  popup: (layout) ->
+    UI.load layout
 
   loadForm: (id) ->
     full_name = "states.forms." .. id
