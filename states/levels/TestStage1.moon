@@ -1,8 +1,6 @@
 SceneManager = require "lib.SceneManager"
-MusicPlayer = require "lib.MusicPlayer"
 Vector = require "hump.vector"
 import Bullet from require "lib.Bullet"
-fonts = require "resources.fonts"
 
 enemies = {
   simple1: {
@@ -56,19 +54,9 @@ enemies = {
       }
   }
 }
---(╬`益´)
-events = {
-  -- {
-  --   time: 0, action: ->
-  --     SceneManager\spawnEnemy {
-  --       pos: Vector(0, 10), text: "LOLCAT", width: 60
-  --       move: (dt) =>
-  --         @pos = @pos + 300 * Vector(1, 0) * dt
-  --       shoot: =>
-  --         if math.random! > 0.97
-  --           PatternManager.spawn "test", @pos
-  --     }
-  -- }
+
+{
+  music: "Confusion"
   {
     time: 0, action: ->
       SceneManager\spawnEnemy enemies.simple1
@@ -173,30 +161,3 @@ events = {
       }
   }
 }
-
-class Stage1
-  -- canvas = love.graphics.newCanvas love.graphics.getWidth! - 200, love.graphics.getHeight!
-  events: events
-  time: 0
-
-  new: =>
-    MusicPlayer.addTrack {name:"Confusion", alias:"Stage1", tag:"Stage1"}
-    @time = 0
-    @current_event = 1
-    love.graphics.setFont fonts.art
-    MusicPlayer.sendEventToTag {tag:"Stage1", event:"play"}
-    -- SceneManager\spawnBoss Vector(0.5, 0.05)
-
-  update: (dt) =>
-    @time += dt
-    event = @events[@current_event]
-    if event and @time >= event.time
-      @current_event += 1
-      event.action!
-
-  keypressed: (key) =>
-
-  draw: =>
-
-  leave: =>
-    MusicPlayer.sendEventToTag {tag:"Stage1", event:"stop"}

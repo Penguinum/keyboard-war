@@ -8,15 +8,13 @@ menu = {
   {
     id: "continue", text: "Continue"
     action: ->
-      MusicPlayer.sendEventToTag {tag:"Stage1", event:"resume"}
       StateManager.resume!
   }
   {
     id: "mainmenu", text: "Return to main menu"
     action: ->
       SceneManager.clear!
-      MusicPlayer.sendEventToTag {tag:"Stage1", event:"stop"}
-      StateManager.switch{ screen: "MainMenu" }
+      StateManager.switch {screen: "MainMenu"}
   }
   { id: "exit", text: "Exit", action: -> love.event.quit(0)}
 }
@@ -32,8 +30,6 @@ class PauseMenu
     love.graphics.setFont fonts.menu
     x, y = 30, 100
     for i = 1, #@menu
-      -- love.graphics.getFont()
-      -- love.graphics.printf(text, x, y, limit, align, r, sx, sy, ox, oy, kx, ky)
       colorize (i == @active_node) and {100, 255, 100} or {100, 100, 100}, ->
         love.graphics.printf @menu[i].text, x, y, 200
       y += 30

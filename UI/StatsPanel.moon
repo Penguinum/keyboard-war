@@ -16,7 +16,7 @@ class StatsPanel
     signal.register "bomb_exploded", (playerstate) ->
       @bombs = playerstate.bombs
 
-    signal.register "player_meets_bullet", (playerstate) ->
+    signal.register "player meets bullet", (playerstate) ->
       @lives = playerstate.lives
       @bombs = playerstate.bombs
 

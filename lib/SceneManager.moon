@@ -29,6 +29,16 @@ class SceneManager
 
     signal.register "dead", (obj) ->
       SceneManager\removeEnemy obj
+    signal.register "player meets bullet", (playerstate) ->
+      BulletManager\removeAllBullets!
+    signal.register "game over", (playerstate) ->
+      if playerstate.lives == 0
+        MusicPlayer.pauseCurrent!
+        StateManager.switch {screen: "GameOver"}
+    signal.register "leave scene", ->
+      MusicPlayer.pauseCurrent!
+    signal.register "resume scene", ->
+      MusicPlayer.resumeCurrent!
 
   addEnemy: (e) =>
     enemies[e] = true
@@ -67,7 +77,7 @@ class SceneManager
     BulletManager\removeAllBullets!
 
   update: (dt) =>
-    for enemy, _ in pairs enemies
+    for enemy in pairs enemies
       enemy\update dt
     player\update dt
     PatternManager\update dt
@@ -101,11 +111,10 @@ class SceneManager
       player and player\keyreleased key
 
   keypressed: (key, rawkey) =>
-    if StateManager.PLAYABLE_STATE and key == "escape"
-      MusicPlayer.sendEvent {tag:"Stage1", event:"pause"}
+    if key == "escape"
+      MusicPlayer.pauseCurrent!
       StateManager.switch {screen: "PauseMenu", pause: true}
       return
-    if StateManager.PLAYABLE_STATE
-      player and player\keypressed key
+    player\keypressed key
 
 return SceneManager

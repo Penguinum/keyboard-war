@@ -56,6 +56,27 @@ function love.keyreleased(key_id)
   end
 end
 
+function love.mousepressed(x, y, button)
+  local state = StateManager.getState()
+  if state.mousepressed then
+    state:mousepressed(x, y, button)
+  end
+end
+
+function love.mousereleased(x, y, button)
+  local state = StateManager.getState()
+  if state.mousereleased then
+    state:mousereleased(x, y, button)
+  end
+end
+
+function love.textinput(text)
+  local state = StateManager.getState()
+  if state.textinput then
+    state:textinput(text)
+  end
+end
+
 function love.draw()
   CScreen.apply()
   if config.settings.graphics then

@@ -38,10 +38,6 @@ BulletManager =
   removeBulletWithHitbox: (hbox) =>
     hbox.bullet\remove!
 
-
-signal.register "player_meets_bullet", ->
-  BulletManager\removeAllBullets!
-
 class Bullet
   new: (args) =>
     @pos = args.pos

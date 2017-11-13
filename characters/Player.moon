@@ -78,7 +78,7 @@ class Player extends Basechar
         if k.type == "evil"
           @lives -= 1
           @bombs = initial_bomb_count
-          signal.emit("player_meets_bullet", {lives: @lives, bombs: @bombs})
+          signal.emit("player meets bullet", {lives: @lives, bombs: @bombs})
           if @lives == 0 -- TODO move this somewhere else
             StateManager.switch {screen: "GameOver"}
             SceneManager = require "lib.SceneManager"

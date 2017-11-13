@@ -83,15 +83,13 @@ MusicPlayer =
   tracks: {}
   aliases: {}
   tags: {}
-  addTrack: (args) ->
-    assert args.name
-    assert args.alias
+  stack: {}
+  playTrack: (args) ->
+    assert args.name and args.alias
     track = Track("resources/music/"..args.name..".ogg")\set{fadein:1, fadeout:1}
-    table.insert(MusicPlayer.tracks, track)
-    MusicPlayer.aliases[args.alias] = #MusicPlayer.tracks
-    if args.tag
-      MusicPlayer.tags[args.tag] = MusicPlayer.tags[args.tag] or {}
-      table.insert(MusicPlayer.tags[args.tag], #MusicPlayer.tracks)
+    table.insert(MusicPlayer.stack, track)
+    MusicPlayer.aliases[args.alias] = track
+    track\play!
     return MusicPlayer
 
   sendEvent: (args) ->
@@ -113,8 +111,16 @@ MusicPlayer =
     return MusicPlayer.tracks[MusicPlayer.aliases[alias]]
 
   update: (dt) ->
-    for _, v in pairs MusicPlayer.tracks
-      v\update dt
+    for _, track in pairs MusicPlayer.stack
+      track\update dt
     return MusicPlayer
+
+  pauseCurrent: ->
+    if MusicPlayer.stack[#MusicPlayer.stack]
+      MusicPlayer.stack[#MusicPlayer.stack]\pause!
+
+  resumeCurrent: ->
+    if MusicPlayer.stack[#MusicPlayer.stack]
+      MusicPlayer.stack[#MusicPlayer.stack]\resume!
 
 return MusicPlayer

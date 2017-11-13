@@ -1,11 +1,13 @@
 --- Switches gamestates
 gamestate = require "hump.gamestate"
+signal = require "hump.signal"
+LevelPlayer = require("lib.LevelPlayer")
 
 local switcher
 local previousStateId, currentStateId, currentState, previousState
 
-getStage = (id) ->
-  scene = require("states.stages." .. id)!
+getLevel = (id) ->
+  scene = LevelPlayer require("states.levels." .. id)
   SceneManager = require "lib.SceneManager"
   sceneManager = SceneManager {:scene}
   sceneManager.isStage = true
@@ -20,8 +22,12 @@ switcher =
     previousStateId = currentStateId
     currentStateId = args.screen or args.stage
     previousState = currentState
-    currentState = (args.screen and getScreen or getStage)(currentStateId)
+    currentState = (args.screen and getScreen or getLevel)(currentStateId)
     (args.pause and gamestate.push or gamestate.switch)(currentState)
+    if not args.pause and args.screen
+      signal.emit "leave scene"
+    elseif args.pause
+      signal.emit "pause"
     switcher.PLAYABLE_STATE = args.stage and true -- TODO Replace with better solution
 
   --- Resume paused game state (in case we have it)
@@ -30,6 +36,7 @@ switcher =
     currentState = previousState
     switcher.PLAYABLE_STATE = currentState.isStage
     gamestate.pop!
+    signal.emit "resume scene"
 
   getPreviousStateId: ->
     return previousStateId
