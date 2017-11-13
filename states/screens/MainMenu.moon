@@ -5,7 +5,7 @@ colorize = require "lib.colorize"
 
 menu = {
   { id: "editor", text: "Editor", action: -> StateManager.switch{
-      screen: "LevelEditor"
+      screen: "PatternEditor"
     }
   }
   { id: "dev sandbox", text: "Dev sandbox", action: -> StateManager.switch{

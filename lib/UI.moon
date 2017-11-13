@@ -29,7 +29,8 @@ UI =
     -- package.loaded[id] = nil
     return UI.load require full_name
 
-  getWidget: (id) -> widget_map[id]
+  getWidget: (id) ->
+    widget_map[id]
 
   inject: (obj) ->
     methods = {
@@ -38,8 +39,13 @@ UI =
       "textinput", "keypressed"
     }
     for _, method in pairs methods
-      obj[method] = (...) =>
-        if LF[method]
+      if not obj[method]
+        obj[method] = (...) =>
+          LF[method](...)
+      else
+        old_method = obj[method]
+        obj[method] = (...) =>
+          old_method(obj, ...)
           LF[method](...)
 
 return UI
