@@ -5,7 +5,7 @@ Most of the code is written in Moonscript. I won't compile the code to Lua befor
 
 If you want to use Moonscript with Love2d without too much problems (i.e. wrong error line numbers and need for compile step), you can have a look at this repo. You need 2 things:
 * Use Moonscript loader to be able to require \*.moon files (see main.lua)
-* Provide custom love.errhand function, to rewrite error messages (see main.lua and util/errhand.lua)
+* Provide custom love.errhand function to rewrite error messages (see main.lua and util/errhand.lua)
 
 ## TODO
 * [x] Playable prototype
