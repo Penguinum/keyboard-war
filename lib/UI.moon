@@ -32,6 +32,12 @@ UI =
   getWidget: (id) ->
     widget_map[id]
 
+  removeWidget: (id) ->
+    widget = UI.getWidget id
+    if widget
+      widget\Remove!
+    widget_map[id] = nil
+
   inject: (obj) ->
     methods = {
       "draw", "update",

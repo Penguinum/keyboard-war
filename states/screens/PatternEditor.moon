@@ -49,7 +49,7 @@ layout = {
                   items: patterns
                   OnSelect: (item) =>
                     Pattern.id = item
-                    UI.getWidget("pattern-select")\Remove!
+                    UI.removeWidget("pattern-select")
                     UI.getWidget("title-current-pattern")\SetText("Current pattern: " .. item)
                 }
               }
