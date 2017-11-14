@@ -64,9 +64,18 @@ layout = {
             PatternManager.spawn Pattern.id, {
               pos: Vector(x2/2, y2/2)
               type: "good"
-              color: {100, 100, 100}
               rad: 10
             }
+        }
+        slider_test: {
+          "slider"
+          left: 10, right: 10, top: 90, height: 20
+          slidetype: "horizontal"
+          min: 0, max: 255
+        }
+        colorpicker_test: {
+          "colorpicker"
+          left: 10, right: 10, top: 120, height: 70
         }
       }
     }

@@ -84,6 +84,17 @@ alert = (message) ->
     _frame\Remove!
   _frame\Center!
 
+slider = (args, parent) ->
+  obj = LF.Create("slider", parent)
+  setSize(obj, parent, args)
+  obj\SetMax(args.max)
+  obj\SetMin(args.min)
+  obj\SetSlideType(args.slidetype)
+  if args.default
+    obj\SetValue(args.default)
+  obj.OnValueChanged = args.OnValueChanged
+  return obj
+
 canvas = (args, parent) ->
   p = LF.Create("image", parent)
   setSize(p, parent, args)
@@ -95,6 +106,28 @@ canvas = (args, parent) ->
   p\SetImage(cnv)
   return p
 
+colorpicker = (args, parent) ->
+  obj = LF.Create("panel", parent)
+  setSize(obj, parent, args)
+  color = args.default or {0, 0, 0}
+  _, self_h = obj\GetSize!
+  cnv = canvas({right: 0, width: self_h, top: 0, bottom: 0}, obj)
+  redraw = ->
+    love.graphics.setCanvas cnv\GetImage!
+    love.graphics.clear unpack color
+    love.graphics.setCanvas!
+  for i = 1, 3
+    slider({
+      left: 2, right: self_h + 2,
+      top: (i - 1) * (3 * self_h / 8 - 1), height: self_h / 4
+      min: 0, max: 255, default: color[i]
+      slidetype: "horizontal"
+      OnValueChanged: (value) =>
+        color[i] = math.floor(value)
+        redraw!
+    }, obj)
+
+
 menu = (args) ->
   LF.Create("menu")
 
@@ -104,6 +137,8 @@ menu = (args) ->
   :frame
   :button
   :text
+  :slider
+  :colorpicker
   :list
   :alert
   :canvas
