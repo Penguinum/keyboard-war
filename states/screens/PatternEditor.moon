@@ -2,8 +2,11 @@ UI = require "lib.UI"
 PatternManager = require "lib.PatternManager"
 import BulletManager from require "lib.Bullet"
 Vector = require "hump.vector"
-colorize = require "lib.colorize"
 -- BulletManager = require "BulletManager"
+
+Pattern = {
+  id: "bomb"
+}
 
 layout = {
   "panel",
@@ -17,33 +20,52 @@ layout = {
       "panel"
       right: 0, width: 200, top: 0, bottom: 0
       content: {
+        text_name: {
+          "text", id: "title-current-pattern"
+          left: 10, top: 10, right: 10, height: 20
+          text: "Pattern: " .. Pattern.id
+        }
+        button_pattern_list: {
+          "button"
+          left: 10, right: 10, top: 30, height: 20
+          text: "Select pattern"
+          OnClick: =>
+            files = love.filesystem.getDirectoryItems("patterns")
+            patterns = {}
+            for _, file in pairs files
+              table.insert(patterns, file\match("(.+)%.moon"))
+            UI.popup {
+              "frame", id: "pattern-select"
+              right: 0, width: 300, top: 0, height: 300
+              content: {
+                {
+                  "text"
+                  left: 10, right: 10, top: 30, height: 20
+                  text: "Select pattern..."
+                }
+                {
+                  "list",
+                  left: 10, right: 10, top: 50, bottom: 10
+                  items: patterns
+                  OnSelect: (item) =>
+                    Pattern.id = item
+                    UI.getWidget("pattern-select")\Remove!
+                    UI.getWidget("title-current-pattern")\SetText("Current pattern: " .. item)
+                }
+              }
+            }
+        }
         button_run: {
           "button"
-          left: 10, right: 10, top: 10, height: 20
-          text: "Test"
+          left: 10, right: 10, top: 60, height: 20
+          text: "Run pattern"
           OnClick: =>
             x2, y2 = UI.getWidget("DrawingArea")\GetSize!
-            PatternManager.spawn "test", {
+            PatternManager.spawn Pattern.id, {
               pos: Vector(x2/2, y2/2)
               type: "good"
               color: {100, 100, 100}
               rad: 10
-            }
-        }
-        button_hello: {
-          "button"
-          left: 10, right: 10, bottom: 10, height: 20
-          text: "Hello void"
-          OnClick: =>
-            UI.popup {
-              "frame",
-              center: true, height: 200, width: 300
-              content: {
-                layout: {
-                  "button", left: 10, right: 10, top: 30, height: 20
-                  text: "some text"
-                }
-              }
             }
         }
       }

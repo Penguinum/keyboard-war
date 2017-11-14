@@ -42,11 +42,31 @@ frame = (args) ->
   return obj
 
 button = (args, parent) ->
-  button = LF.Create("button", parent)
-  setSize(button, parent, args)
-  button\SetText(args.text)
-  button.OnClick = args.OnClick
-  return button
+  obj = LF.Create("button", parent)
+  setSize(obj, parent, args)
+  obj\SetText(args.text)
+  obj.OnClick = args.OnClick
+  return obj
+
+text = (args, parent) ->
+  obj = LF.Create("text", parent)
+  setSize(obj, parent, args)
+  obj\SetText(args.text)
+  return obj
+
+list = (args, parent) ->
+  obj = LF.Create("list", parent)
+  setSize(obj, parent, args)
+  obj.OnSelect = args.OnSelect
+  if args.items
+    for _, item in ipairs(args.items)
+      b = LF.Create("button")
+      b\SetText(item)
+      b.OnClick = =>
+        if obj.OnSelect
+          obj\OnSelect item
+      obj\AddItem(b)
+  return obj
 
 alert = (message) ->
   _frame = LF.Create("frame")
@@ -83,6 +103,8 @@ menu = (args) ->
   :panel
   :frame
   :button
+  :text
+  :list
   :alert
   :canvas
   :menu
