@@ -4,10 +4,6 @@ fonts = require "resources.fonts"
 colorize = require "lib.colorize"
 
 menu = {
-  -- { id: "editor", text: "Editor", action: -> StateManager.switch{
-  --     screen: "PatternEditor"
-  --   }
-  -- }
   { id: "dev sandbox", text: "Dev sandbox", action: -> StateManager.switch{
       stage: "Sandbox"
     }

@@ -2,20 +2,6 @@ Vector = require "hump.vector"
 
 --- Pattern description
 {
-  export_parameters: {
-    {
-      "rad"
-      type: "number"
-      max: 10
-      min: 5
-      default: 5
-    }
-    {
-      "color"
-      type: "color"
-      default: { 255, 255, 255 }
-    }
-  }
   speed: 0
   new: (args) =>
     ret = {}
