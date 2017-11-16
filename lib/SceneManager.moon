@@ -15,7 +15,7 @@ colorize = require "lib.colorize"
 const = require "const"
 
 FX = Moonshine(Moonshine.effects.glow)
-FX.glow.strength = 3
+FX.glow.strength = 5
 
 class SceneManager
   enemies = {}
@@ -95,14 +95,12 @@ class SceneManager
     love.graphics.setFont fonts.art
     colorize {10, 10, 10}, ->
       love.graphics.rectangle "fill", 0, 0, @canvas\getWidth!, @canvas\getHeight!
-
-    for enemy, _ in pairs enemies
-      enemy\draw!
-    player\draw!
-    PatternManager\draw!
-    BulletManager\draw!
+    FX ->
+      for enemy, _ in pairs enemies
+        enemy\draw!
+      player\draw!
+      BulletManager\draw!
     love.graphics.setCanvas!
-    -- FX ->
     love.graphics.scale const.scaling
     love.graphics.draw @canvas
     love.graphics.scale 1.0 / const.scaling
