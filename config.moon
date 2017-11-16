@@ -2,7 +2,6 @@
   debug: false
   screen_width: 800
   screen_height: 600
-  panel_width: 200
   binds: {
     shoot: {"z", "return"}
     bomb: "x"

@@ -2,13 +2,36 @@ UI = require "lib.UI"
 PatternManager = require "lib.PatternManager"
 import BulletManager from require "lib.Bullet"
 Vector = require "hump.vector"
+inspect = require "inspect"
 -- BulletManager = require "BulletManager"
+
+love.window.setMode(0, 0, {fullscreen: false})
 
 Pattern = {
   id: "bomb"
 }
 
-layout = {
+getPattern = (name) -> require("patterns." .. name)
+
+generateEditor = (args) ->
+  layout = {}
+  parameters = args.parameters
+  for i, parameter in ipairs(parameters)
+    if parameter.type == "number"
+      layout[i] = {
+        "slider"
+        left: 10, right: 10, top: (i - 1) * 25 + 5, height: 23
+        min: parameter.min, max: parameter.max, default: parameter.default
+        slidetype: "horizontal"
+      }
+  return {
+    "panel"
+    left: args.left, right: args.right, width: args.width
+    top: args.top, bottom: args.bottom, height: args.height
+    content: layout
+  }
+
+patternEditorForm = {
   "panel",
   left: 0, right: 0, top: 0, bottom: 0
   content: {
@@ -17,7 +40,7 @@ layout = {
       left: 0, right: 200, top: 0, bottom: 0
     }
     {
-      "panel"
+      "panel", id: "panel-pattern-editor"
       right: 0, width: 200, top: 0, bottom: 0
       content: {
         text_name: {
@@ -49,6 +72,12 @@ layout = {
                   items: patterns
                   OnSelect: (item) =>
                     Pattern.id = item
+                    Pattern.pattern = getPattern(item)
+                    panel_editor = UI.getWidget("panel-pattern-editor")
+                    UI.load(generateEditor({
+                      left: 0, right: 0, top: 100, bottom: 0
+                      parameters: Pattern.pattern.parameters
+                    }), panel_editor)
                     UI.removeWidget("pattern-select")
                     UI.getWidget("title-current-pattern")\SetText("Current pattern: " .. item)
                 }
@@ -67,16 +96,6 @@ layout = {
               rad: 10
             }
         }
-        slider_test: {
-          "slider"
-          left: 10, right: 10, top: 90, height: 20
-          slidetype: "horizontal"
-          min: 0, max: 255
-        }
-        colorpicker_test: {
-          "colorpicker"
-          left: 10, right: 10, top: 120, height: 70
-        }
       }
     }
   }
@@ -85,7 +104,7 @@ layout = {
 class PatternEditor
   new: =>
     UI.inject(@)
-    UI.load layout
+    UI.load patternEditorForm
 
   draw: =>
     love.graphics.setCanvas UI.getWidget("DrawingArea")\GetImage!

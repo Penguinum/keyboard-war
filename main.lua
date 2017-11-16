@@ -5,7 +5,6 @@ local StateManager = require "lib.StateManager"
 local SceneManager = require "lib.SceneManager"
 local MusicManager = require "lib.MusicPlayer"
 local Controller = require "lib.Controller"
-local CScreen = require "lib.CScreen"
 
 -- Lovedebug
 -- require "lib.lovedebug"
@@ -15,6 +14,23 @@ _G.inspect = require "lib.inspect"
 
 local lovelog = require "lib.lovelog"
 local config = require "config"
+local const = require "const"
+
+local function getCanvasSize()
+  local canvas_max_w = config.screen_width - const.panel_width
+  local canvas_max_h = config.screen_height
+  local wh_ratio = canvas_max_w / canvas_max_h
+  local real_wh_ratio = const.scene_width / const.scene_height
+  local scaling
+  if wh_ratio > real_wh_ratio then
+    scaling = canvas_max_h / const.scene_height
+  else
+    scaling = canvas_max_w / const.scene_width
+  end
+  const.scaling = scaling
+  const.active_screen_width = math.floor(const.scene_width * scaling + const.panel_width)
+  const.active_screen_height = math.floor(const.scene_height * scaling)
+end
 
 function love.load()
   love.window.setTitle("Keyboard wars")
@@ -25,7 +41,7 @@ function love.load()
   StateManager.switch{ screen = "MainMenu" }
 
   love.window.setMode(config.screen_width, config.screen_height)
-  CScreen.init(config.screen_width, config.screen_height, true)
+  local canvas_w, canvas_h = getCanvasSize()
 end
 
 function love.update(dt)
@@ -78,14 +94,12 @@ function love.textinput(text)
 end
 
 function love.draw()
-  CScreen.apply()
   if config.settings.graphics then
     local scene = StateManager:getState()
     if scene then
       scene:draw()
     end
   end
-  CScreen.cease()
 end
 
 love.errhand = require "util.errhand"

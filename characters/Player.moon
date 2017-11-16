@@ -67,8 +67,8 @@ class Player extends Basechar
       @pos.x = 0
     elseif @pos.x > const.scene_width
       @pos.x = const.scene_width
-    if @pos.y > graphics.getHeight!
-      @pos.y = graphics.getHeight!
+    if @pos.y > const.scene_height
+      @pos.y = const.scene_height
     elseif @pos.y < 0
       @pos.y = 0
     @hitbox\moveTo @pos.x, @pos.y

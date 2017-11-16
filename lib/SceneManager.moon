@@ -23,7 +23,10 @@ class SceneManager
   canvas: love.graphics.newCanvas const.scene_width, love.graphics.getHeight!
 
   new: (args) =>
-    @statsPanel = StatsPanel { width: 200, height: 600}
+    @statsPanel = StatsPanel {
+      width: const.panel_width
+      height: const.active_screen_height
+    }
     @scene = args.scene
     @spawnPlayer!
 
@@ -99,8 +102,10 @@ class SceneManager
     PatternManager\draw!
     BulletManager\draw!
     love.graphics.setCanvas!
-    FX ->
-      love.graphics.draw @canvas
+    -- FX ->
+    love.graphics.scale const.scaling
+    love.graphics.draw @canvas
+    love.graphics.scale 1.0 / const.scaling
     @statsPanel\draw!
     lovelog.print "FPS: " .. love.timer.getFPS!
     if @scene.draw
