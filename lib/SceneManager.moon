@@ -101,9 +101,7 @@ class SceneManager
       player\draw!
       BulletManager\draw!
     love.graphics.setCanvas!
-    love.graphics.scale const.scaling
-    love.graphics.draw @canvas
-    love.graphics.scale 1.0 / const.scaling
+    love.graphics.draw @canvas, const.hspace, const.vspace, 0, const.scaling, const.scaling
     @statsPanel\draw!
     lovelog.print "FPS: " .. love.timer.getFPS!
     if @scene.draw

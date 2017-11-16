@@ -1,6 +1,7 @@
 colorize = require "lib.colorize"
 fonts = require "resources.fonts"
 signal = require "hump.signal"
+const = require "const"
 import graphics from love
 
 drawline = (num) ->
@@ -42,7 +43,7 @@ class StatsPanel
     graphics.printf "Explode bomb: x", 10, 190, 200
     graphics.printf "Pause: escape", 10, 220, 200
     graphics.setCanvas!
-    graphics.draw @canvas, graphics.getWidth! - @width, 0
+    graphics.draw @canvas, graphics.getWidth! - @width - const.hspace, const.vspace
 
   update: (dt) =>
 

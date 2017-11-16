@@ -16,20 +16,31 @@ local lovelog = require "lib.lovelog"
 local config = require "config"
 local const = require "const"
 
-local function getCanvasSize()
+local function resize() -- TODO: refactor and allow resizing during the game
   local canvas_max_w = config.screen_width - const.panel_width
   local canvas_max_h = config.screen_height
   local wh_ratio = canvas_max_w / canvas_max_h
   local real_wh_ratio = const.scene_width / const.scene_height
   local scaling
+  local space_is_vertical
+  local space_is_horizontal
   if wh_ratio > real_wh_ratio then
     scaling = canvas_max_h / const.scene_height
+    space_is_horizontal = true
   else
     scaling = canvas_max_w / const.scene_width
+    space_is_vertical = true
   end
   const.scaling = scaling
   const.active_screen_width = math.floor(const.scene_width * scaling + const.panel_width)
   const.active_screen_height = math.floor(const.scene_height * scaling)
+  if space_is_horizontal then
+    const.hspace = math.floor((config.screen_width - const.active_screen_width) / 2)
+    const.vspace = 0
+  else
+    const.vspace = math.floor((config.screen_height - const.active_screen_height) / 2)
+    const.hspace = 0
+  end
 end
 
 function love.load()
@@ -41,7 +52,7 @@ function love.load()
   StateManager.switch{ screen = "MainMenu" }
 
   love.window.setMode(config.screen_width, config.screen_height)
-  local canvas_w, canvas_h = getCanvasSize()
+  resize()
 end
 
 function love.update(dt)
