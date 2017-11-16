@@ -15,7 +15,7 @@ colorize = require "lib.colorize"
 const = require "const"
 
 FX = Moonshine(Moonshine.effects.glow)
-FX.glow.strength = 5
+FX.glow.strength = 3
 
 class SceneManager
   enemies = {}
@@ -93,7 +93,7 @@ class SceneManager
     lovelog.reset!
     love.graphics.setCanvas @canvas
     love.graphics.setFont fonts.art
-    colorize {10, 10, 10}, ->
+    colorize {20, 20, 20}, ->
       love.graphics.rectangle "fill", 0, 0, @canvas\getWidth!, @canvas\getHeight!
     FX ->
       for enemy, _ in pairs enemies
