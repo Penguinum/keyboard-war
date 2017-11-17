@@ -2,7 +2,6 @@ const = require "const"
 colorize = require "lib.colorize"
 StatsPanel = require "UI.StatsPanel"
 StateManager = require "lib.StateManager"
-MusicPlayer = require "lib.MusicPlayer"
 Moonshine = require "moonshine"
 import BulletManager from require "lib.Bullet"
 
@@ -80,7 +79,7 @@ Scene =
 
   keypressed: (key, rawkey) =>
     if key == "escape"
-      MusicPlayer.pauseCurrent!
+      Game.music\pauseCurrent!
       StateManager.switch {screen: "PauseMenu", pause: true}
       return
     for object in pairs KeypressSubscribers

@@ -1,6 +1,5 @@
 Controller = require "lib.Controller"
 StateManager = require "lib.StateManager"
-MusicPlayer = require "lib.MusicPlayer"
 
 love.draw = ->
   if Game.settings.graphics
@@ -49,6 +48,6 @@ love.update = (dt) ->
   scene = StateManager\getState()
   if scene then
     scene\update(dt)
-  MusicPlayer.update(dt)
+  Game.music\update(dt)
 
 require(Game.GAME_PATH .. "/init")

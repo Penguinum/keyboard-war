@@ -21,6 +21,7 @@ init = (path="game") ->
     settings: require "Game/settings"
     scene: require "Game/scene"
     graphics: require "Game/graphics"
+    music: require "Game/music"
     state:
       switch: (arg) -> StateManager.switch(arg)
       resume: (arg) -> StateManager.resume(arg)
