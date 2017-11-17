@@ -11,10 +11,16 @@ class Player extends BasicCharacter
     @slowspeed = 100
     @lives = 3
     @drawlayer = 5
+    @handle_keypresses = true
     -- Game.ui.updatePlayerInfo {lives: @lives, bombs: @bombs}
 
   draw: =>
     super\draw!
+
+  spawnPattern: =>
+    Game.scene\spawn pattern {
+      pos: @pos
+    }
 
   update: (dt) =>
     vec = Vector 0

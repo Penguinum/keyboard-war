@@ -4,10 +4,12 @@ StatsPanel = require "UI.StatsPanel"
 StateManager = require "lib.StateManager"
 MusicPlayer = require "lib.MusicPlayer"
 Moonshine = require "moonshine"
+import BulletManager from require "lib.Bullet"
 
 Objects = {}
 Drawlayers = {}
 sortedLayers = {}
+KeypressSubscribers = {}
 
 FX = Moonshine(Moonshine.effects.glow)
 FX.glow.strength = 3
@@ -39,10 +41,19 @@ Scene =
         table.insert(sortedLayers, k)
       table.sort(sortedLayers)
     Drawlayers[layer][obj] = true
+    if obj.handle_keypresses
+      KeypressSubscribers[obj] = true
+
+  remove: (obj) =>
+    Objects[obj] = nil
+    if obj.drawlayer
+      Drawlayers[obj.drawlayer][obj] = nil
+    KeypressSubscribers[obj] = nil
 
   update: (dt) =>
     for object in pairs Objects do
       object\update dt
+    BulletManager\update dt
 
   draw: =>
     love.graphics.setCanvas @canvas
@@ -53,6 +64,7 @@ Scene =
         layer = Drawlayers[id]
         for object in pairs layer
           object\draw!
+      BulletManager\draw!
     love.graphics.setCanvas!
     love.graphics.draw @canvas, const.hspace, const.vspace, 0, const.scaling, const.scaling
     @statsPanel\draw!
@@ -60,15 +72,16 @@ Scene =
 
   keyreleased: (key, rawkey) =>
     if StateManager.PLAYABLE_STATE
-      if @player
-        @player\keyreleased key
+      for object in pairs KeypressSubscribers
+        if object.keyreleased
+          object\keyreleased key
 
   keypressed: (key, rawkey) =>
     if key == "escape"
       MusicPlayer.pauseCurrent!
       StateManager.switch {screen: "PauseMenu", pause: true}
       return
-    if @player
-      @player\keypressed key
+    for object in pairs KeypressSubscribers
+      object\keypressed key
 
 return Scene

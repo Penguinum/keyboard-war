@@ -1,8 +1,9 @@
 Vector = require "hump.vector"
 
 --- Pattern description
-{
+Pattern {
   speed: 0
+  drawlayer: 8
   new: (args) =>
     ret = {}
     for i = -180, 180, 10

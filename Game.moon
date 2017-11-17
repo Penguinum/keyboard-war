@@ -2,12 +2,12 @@ exportGlobals = ->
   export Vector = require "hump.vector"
   export Controller = require "lib.Controller"
   export BasicCharacter = require "lib.BasicCharacter"
+  export Pattern = require "lib.Pattern"
   export Menu = (menu) -> ->
     require("lib.Menu")(menu)
 
 init = (path="game") ->
   const = require("const")
-  SceneManager = require "lib.SceneManager"
   StateManager = require "lib.StateManager"
   local game
   unpack = unpack or table.unpack
