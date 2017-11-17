@@ -1,2 +1,2 @@
 player = Game.modules["characters/Player"]!
-Game.scene\spawn player, Vector 200, 200
+Game.scene\spawn player, Vector Game.scene.width/2, Game.scene.height/2

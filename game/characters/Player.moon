@@ -18,8 +18,13 @@ class Player extends BasicCharacter
     super\draw!
 
   spawnPattern: =>
+    -- TODO: spawn patterns after key released
+    -- Change parameters depending on how long key was pressed
+    -- Draw some "energy bar"
     Game.scene\spawn pattern {
       pos: @pos
+      color: { 255, 255, 255 }
+      rad: 15
     }
 
   update: (dt) =>

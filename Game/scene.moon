@@ -31,7 +31,9 @@ Scene =
     @width = const.scene_width
     @height = const.scene_height
 
-  spawn: (obj) =>
+  spawn: (obj, pos) =>
+    if pos
+      obj.pos = pos
     Objects[obj] = true
     layer = obj.drawlayer
     if not Drawlayers[layer]
