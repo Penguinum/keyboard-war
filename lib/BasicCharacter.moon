@@ -3,7 +3,7 @@ HC = require "HCWorld"
 colorize = require "lib.colorize"
 config = require "config"
 
-class Enemy
+class Character
   pos: Vector(0, 0)
   width: 35
   height: 15
@@ -11,7 +11,7 @@ class Enemy
   hitbox_radius: 3
   color: {100, 255, 100}
 
-  new: =>
+  spawn: =>
     @hitbox = HC\circle @pos.x, @pos.y, @hitbox_radius
 
   setText: (t) =>

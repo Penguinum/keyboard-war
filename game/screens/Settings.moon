@@ -1,54 +1,32 @@
-config = require "config"
-fonts = require "resources.fonts"
-import settings from config
-StateManager = require "lib.StateManager"
-colorize = require "lib.colorize"
+settings = Game.settings
 
-menu = {
-  {
-    id: "gfx"
-    keypressed: (key) =>
-      settings.graphics = not settings.graphics
-    getText: =>
-      return "Graphics: " .. (settings.graphics and "on" or "off")
+return Menu
+  menu: {
+    {
+      id: "res"
+      resolutions: {{800, 600}, {900, 650}}
+      keypressed: (key) =>
+        if not @current_resolution
+          @current_resolution = 1
+        @current_resolution += 1
+        if @current_resolution > #@resolutions
+          @current_resolution = 1
+        settings.resolution = @resolutions[@current_resolution]
+        Game.graphics.resize!
+      getText: =>
+        return "Resolution: " .. (settings.resolution[1] .. "x" .. settings.resolution[2])
+    }
+    { -- Just kidding
+      id: "gfx"
+      keypressed: (key) =>
+        if key == "left" or key == "right"
+          settings.graphics = not settings.graphics
+      getText: =>
+        return "Graphics: " .. (settings.graphics and "on" or "off")
+      }
+    {
+      id: "back"
+      text: "Back"
+      action: => Game.state.switch { screen: "MainMenu" }
+    }
   }
-  {
-    id: "res"
-    keypressed: (key) =>
-      settings.graphics = not settings.graphics
-    getText: =>
-      return "Resolution: " .. (settings.graphics and "on" or "off")
-  }
-  {
-    id: "back"
-    text: "Back"
-    keypressed: (key) =>
-      if key == "shoot"
-        StateManager.switch{ screen: "MainMenu" }
-  }
-}
-
-class Settings
-  menu: menu
-  active_node: 1
-  draw: =>
-    love.graphics.setFont fonts.menu
-    x, y = 30, 30
-    for i, v in ipairs menu
-      colorize (i == @active_node) and {100, 255, 100} or {100, 100, 100}, ->
-        love.graphics.printf(v.text or v\getText!, x, y, 300)
-      y += 30
-
-  keypressed: (key) =>
-    if key == "down"
-      @active_node += 1
-      if @active_node > #@menu
-        @active_node = 1
-    elseif key == "up"
-      @active_node -= 1
-      if @active_node == 0
-        @active_node = #@menu
-    elseif @menu[@active_node].keypressed
-      @menu[@active_node]\keypressed key
-
-  update: (dt) =>

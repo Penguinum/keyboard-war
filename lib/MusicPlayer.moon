@@ -86,7 +86,7 @@ MusicPlayer =
   stack: {}
   playTrack: (args) ->
     assert args.name and args.alias
-    track = Track("resources/music/"..args.name..".ogg")\set{fadein:1, fadeout:1}
+    track = Track(Game.GAME_PATH.."/resources/music/"..args.name..".ogg")\set{fadein:1, fadeout:1}
     table.insert(MusicPlayer.stack, track)
     MusicPlayer.aliases[args.alias] = track
     track\play!

@@ -1,6 +1,4 @@
 colorize = require "lib.colorize"
-fonts = require "resources.fonts"
-love = love
 
 class Matrix
   update_time: 0.03
@@ -29,7 +27,7 @@ class Matrix
     return ret
 
   update: (dt) =>
-    love.graphics.setFont fonts.art
+    Game.graphics.setFont("art", 10)
     @overall_time += dt
     -- if @overall_time > 2
     --   @stop!

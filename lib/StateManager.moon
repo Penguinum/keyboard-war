@@ -1,18 +1,17 @@
 --- Switches gamestates
 gamestate = require "hump.gamestate"
 signal = require "hump.signal"
-LevelPlayer = require("lib.LevelPlayer")
 
 local switcher
 local previousStateId, currentStateId, currentState, previousState
 
 getLevel = (id) ->
-  scene = LevelPlayer require("states.levels." .. id)
   SceneManager = require "lib.SceneManager"
-  sceneManager = SceneManager {:scene}
-  sceneManager.isStage = true
-  return sceneManager
-getScreen = (id) -> require("states.screens." .. id)!
+  require(Game.GAME_PATH .. ".levels." .. id)
+  SceneManager\reset!
+  SceneManager.isStage = true
+  return SceneManager
+getScreen = (id) -> require(Game.GAME_PATH .. ".screens." .. id)!
 
 switcher =
   --- Switch to some game state (screen or stage)

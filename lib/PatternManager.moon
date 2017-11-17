@@ -14,7 +14,7 @@ Pattern = (pat) ->
   return new_pattern
 
 {
-  spawn: (name, args) -> Pattern(require("patterns." .. name))(args)
+  spawn: (pattern, args) -> Pattern(pattern)(args)
   draw: ->
   update: (dt) ->
 }
