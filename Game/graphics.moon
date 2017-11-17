@@ -26,7 +26,7 @@ graphics =
     love.window.setMode(screen_w, screen_h)
     canvas_max_w = screen_w - const.panel_width
     canvas_max_h = screen_h
-    wh_ratio = canvas_max_h / canvas_max_w
+    wh_ratio = canvas_max_w / canvas_max_h
     real_wh_ratio = const.scene_width / const.scene_height
     local scaling, space_is_vertical, space_is_horizontal
     if wh_ratio > real_wh_ratio
@@ -44,6 +44,7 @@ graphics =
     else
       const.vspace = math.floor((screen_h - const.active_screen_height) / 2)
       const.hspace = 0
+    Game.scene\resize!
 
   fonts: {}
   setFont: (name) ->

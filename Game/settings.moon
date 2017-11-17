@@ -45,7 +45,7 @@ local settings
 setDefaultSettings = ->
   default_settings = {
     graphics: true
-    resolution: {900, 650}
+    resolution: {900, 600}
   }
   settings = default_settings
   love.filesystem.write("settings.moon", serialize default_settings)

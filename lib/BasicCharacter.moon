@@ -11,7 +11,7 @@ class Character
   hitbox_radius: 3
   color: {100, 255, 100}
 
-  spawn: =>
+  new: =>
     @hitbox = HC\circle @pos.x, @pos.y, @hitbox_radius
 
   setText: (t) =>

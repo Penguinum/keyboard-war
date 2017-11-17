@@ -8,7 +8,7 @@ Menu
     {
       id: "mainmenu", text: "Return to main menu"
       action: ->
-        Game.scene.clear!
+        Game.scene\reset!
         Game.state.switch {screen: "MainMenu"}
     }
     { id: "exit", text: "Exit", action: -> love.event.quit(0)}

@@ -16,7 +16,8 @@ class Menu
       if @active_node == 0
         @active_node = #@menu
     elseif key_id == "shoot"
-      @menu[@active_node].action!
+      if @menu[@active_node].action
+        @menu[@active_node].action!
     elseif @menu[@active_node].keypressed
       @menu[@active_node]\keypressed key_id
 

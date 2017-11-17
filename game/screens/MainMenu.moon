@@ -5,10 +5,10 @@ menu = {
       stage: "Sandbox"
     }
   }
-  { id: "play", text: "Play", action: -> Game.state.switch {
-      stage: "TestStage1"
-    }
-  }
+  -- { id: "play", text: "Play", action: -> Game.state.switch {
+  --     stage: "TestStage1"
+  --   }
+  -- }
   { id: "settings", text: "Settings", action: -> Game.state.switch {
       screen: "Settings"
     }

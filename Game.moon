@@ -1,6 +1,6 @@
 exportGlobals = ->
   export Vector = require "hump.vector"
-  export Contorller = require "lib.Controller"
+  export Controller = require "lib.Controller"
   export BasicCharacter = require "lib.BasicCharacter"
   export Menu = (menu) -> ->
     require("lib.Menu")(menu)
@@ -19,11 +19,7 @@ init = (path="game") ->
       __index: (self, k) -> require(path .. "." .. k)
     })
     settings: require "Game/settings"
-    scene:
-      getWidth: -> const.scene_width
-      getHeight: const.scene_height
-      spawnPlayer: (pos) ->
-        SceneManager\spawnPlayer pos
+    scene: require "Game/scene"
     graphics: require "Game/graphics"
     state:
       switch: (arg) -> StateManager.switch(arg)

@@ -6,11 +6,9 @@ local switcher
 local previousStateId, currentStateId, currentState, previousState
 
 getLevel = (id) ->
-  SceneManager = require "lib.SceneManager"
+  Game.scene\reset!
   require(Game.GAME_PATH .. ".levels." .. id)
-  SceneManager\reset!
-  SceneManager.isStage = true
-  return SceneManager
+  return Game.scene
 getScreen = (id) -> require(Game.GAME_PATH .. ".screens." .. id)!
 
 switcher =

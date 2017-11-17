@@ -3,16 +3,18 @@ Controller = Controller
 BasicCharacter = BasicCharacter
 pattern = Game.modules["patterns/test"]
 
-Player = BasicCharacter
-  spawn: =>
-    @text: "(=^･ω･^=)"
-    @width: 70
-    @speed: 300
-    @slowspeed: 100
-    @lives: 3
-    Game.ui.updatePlayerInfo {lives: @lives, bombs: @bombs}
+class Player extends BasicCharacter
+  new: =>
+    @text = "(=^･ω･^=)"
+    @width = 70
+    @speed = 300
+    @slowspeed = 100
+    @lives = 3
+    @drawlayer = 5
+    -- Game.ui.updatePlayerInfo {lives: @lives, bombs: @bombs}
 
   draw: =>
+    super\draw!
 
   update: (dt) =>
     vec = Vector 0
@@ -46,34 +48,12 @@ Player = BasicCharacter
       @pos.y = Game.scene.height
     elseif @pos.y < 0
       @pos.y = 0
-    @hitbox\moveTo @pos.x, @pos.y
+    -- @hitbox\moveTo @pos.x, @pos.y
 
   shoot: =>
     dist = 20
     if Controller.pressed "slowdown"
       dist = 10
-    Game.spawnBullet {
-      pos: @pos + Vector(-dist, -10),
-      speed: 1500,
-      dir: Vector 0, -1
-      type: "good"
-      color: {255, 255, 255}
-    }
-    Game.spawnBullet {
-      pos: @pos + Vector(dist, -10),
-      speed: 1500,
-      dir: Vector 0, -1
-      type: "good"
-      color: {255, 255, 255}
-    }
-
-  spawnPattern: =>
-    Game.spawnPattern pattern, {
-      pos: @pos
-      type: "good"
-      color: {100, 100, 100}
-      rad: 10
-    }
 
   keypressed: (key) =>
     if Controller.getActionByKey(key) == "pattern4debug"
