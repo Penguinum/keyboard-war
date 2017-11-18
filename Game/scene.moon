@@ -1,5 +1,5 @@
 const = require "const"
-colorize = require "lib.colorize"
+colorize = require "util.colorize"
 StatsPanel = require "UI.StatsPanel"
 StateManager = require "lib.StateManager"
 Moonshine = require "moonshine"
@@ -12,6 +12,8 @@ KeypressSubscribers = {}
 
 FX = Moonshine(Moonshine.effects.glow)
 FX.glow.strength = 3
+
+frame = 1
 
 Scene =
   getWidth: => const.scene_width
@@ -42,7 +44,7 @@ Scene =
         table.insert(sortedLayers, k)
       table.sort(sortedLayers)
     Drawlayers[layer][obj] = true
-    if obj.handle_keypresses
+    if obj.keypressed
       KeypressSubscribers[obj] = true
 
   remove: (obj) =>
@@ -69,7 +71,7 @@ Scene =
     love.graphics.setCanvas!
     love.graphics.draw @canvas, const.hspace, const.vspace, 0, const.scaling, const.scaling
     @statsPanel\draw!
-
+    frame += 1
 
   keyreleased: (key, rawkey) =>
     if StateManager.PLAYABLE_STATE

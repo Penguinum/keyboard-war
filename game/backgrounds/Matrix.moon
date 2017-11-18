@@ -1,4 +1,4 @@
-colorize = require "lib.colorize"
+colorize = require "util.colorize"
 
 class Matrix
   update_time: 0.03

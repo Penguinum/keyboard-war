@@ -1,4 +1,4 @@
-colorize = require "lib.colorize"
+colorize = require "util.colorize"
 
 class Menu
   new: (args) =>

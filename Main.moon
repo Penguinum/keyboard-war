@@ -40,7 +40,6 @@ love.load = () ->
   math.randomseed(os.time())
   if arg[#arg] == "-debug"
     require("moddebug").start()
-
   love.window.setMode(unpack(Game.settings.resolution))
   Game.graphics.resize!
 

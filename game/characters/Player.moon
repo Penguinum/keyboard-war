@@ -3,19 +3,28 @@ Controller = Controller
 BasicCharacter = BasicCharacter
 pattern = Game.modules["patterns/test"]
 
-class Player extends BasicCharacter
-  new: =>
-    @text = "(=^･ω･^=)"
-    @width = 70
-    @speed = 300
+Player = BasicCharacter
+  states: {
+    default: {
+      textart: {
+        text: "(=^･ｪ･^=)"
+        font: "art"
+      }
+    }
+    concentrated: {
+      textart: {
+        text: "(=^‥^=)"
+        font: "art"
+      }
+    }
+  }
+  init: =>
+    @state = "default"
     @slowspeed = 100
     @lives = 3
     @drawlayer = 5
-    @handle_keypresses = true
+    @speed = 100
     -- Game.ui.updatePlayerInfo {lives: @lives, bombs: @bombs}
-
-  draw: =>
-    super\draw!
 
   spawnPattern: =>
     -- TODO: spawn patterns after key released
@@ -69,3 +78,5 @@ class Player extends BasicCharacter
   keypressed: (key) =>
     if Controller.getActionByKey(key) == "pattern4debug"
       @spawnPattern!
+
+return Player

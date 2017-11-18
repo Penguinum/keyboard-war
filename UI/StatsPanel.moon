@@ -1,4 +1,4 @@
-colorize = require "lib.colorize"
+colorize = require "util.colorize"
 signal = require "hump.signal"
 const = require "const"
 import graphics from love

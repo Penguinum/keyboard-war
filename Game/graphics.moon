@@ -50,5 +50,8 @@ graphics =
   setFont: (name) ->
     fontCache[name] = fontCache[name] or loadFont(name)
     love.graphics.setFont fontCache[name]
+  getFontByName: (name) ->
+    fontCache[name] = fontCache[name] or loadFont(name)
+    return fontCache[name]
 
 return graphics

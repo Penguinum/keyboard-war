@@ -1,6 +1,6 @@
 lovelog = require "lib.lovelog"
 vector = require "hump.vector"
-colorize = require "lib.colorize"
+colorize = require "util.colorize"
 signal = require "hump.signal"
 config = require "config"
 HC = require "HCWorld"

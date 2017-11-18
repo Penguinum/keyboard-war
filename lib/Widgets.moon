@@ -1,5 +1,5 @@
 LF = require "LoveFrames"
-colorize = require "lib.colorize"
+colorize = require "util.colorize"
 unpack = unpack or table.unpack
 
 setSize = (obj, panel, args) ->

@@ -1,19 +1,8 @@
 Vector = require "hump.vector"
-HC = require "HCWorld"
-colorize = require "lib.colorize"
-config = require "config"
+Class = require "hump.class"
+copy = require "util.copy"
 
-class Character
-  pos: Vector(0, 0)
-  width: 35
-  height: 15
-  text: "x_x"
-  hitbox_radius: 3
-  color: {100, 255, 100}
-
-  new: =>
-    @hitbox = HC\circle @pos.x, @pos.y, @hitbox_radius
-
+BasicCharacter = Class
   setText: (t) =>
     @text = t
 
@@ -21,7 +10,11 @@ class Character
     @pos = Vector(x, y)
 
   draw: =>
-    if config.debug
-      @hitbox\draw!
-    topleft = @pos - Vector(@width, 20) / 2
-    colorize @color, -> love.graphics.printf @text, topleft.x, topleft.y, @width, "center"
+    love.graphics.printf "dummy text", @pos.x, @pos.y, 100, "center"
+
+  update: (dt) =>
+
+return (args) ->
+  args = copy args
+  args.__includes = BasicCharacter
+  return Class args

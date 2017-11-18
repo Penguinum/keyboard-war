@@ -1,6 +1,6 @@
 fonts = require "resources.fonts"
 StateManager = require "lib.StateManager"
-colorize = require "lib.colorize"
+colorize = require "util.colorize"
 
 menu = {
   { id: "retry", text: "Retry",
