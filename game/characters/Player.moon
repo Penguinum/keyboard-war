@@ -3,7 +3,7 @@ Controller = Controller
 BasicCharacter = BasicCharacter
 pattern = Game.modules["patterns/test"]
 
-Player = BasicCharacter
+Player = derive(BasicCharacter)
   states: {
     default: {
       textart: {

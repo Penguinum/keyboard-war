@@ -1,3 +1,6 @@
+copy = require "util.copy"
+Class = require "hump.class"
+
 exportGlobals = ->
   export Vector = require "hump.vector"
   export Controller = require "lib.Controller"
@@ -5,6 +8,12 @@ exportGlobals = ->
   export Pattern = require "lib.Pattern"
   export Menu = (menu) -> ->
     require("lib.Menu")(menu)
+  export derive = (classobject) ->
+    (arg) ->
+      args = copy arg
+      args.__includes = classobject
+      Class args
+
 
 init = (path="game") ->
   const = require("const")
