@@ -1,5 +1,5 @@
-yoffset = 0
 disabled = true
+strings = {}
 
 disable = ->
   disabled = true
@@ -11,17 +11,23 @@ toggle = ->
   disabled = not disabled
 
 reset = ->
-  yoffset = 0
+  strings = {}
 
-print = (text) ->
+print = (...) ->
   if disabled
     return
-  love.graphics.print text, 0, yoffset
-  yoffset += 15
+  table.insert(strings, table.concat({...}))
+
+render = ->
+  if disabled
+    return
+  for i, text in ipairs strings
+    love.graphics.print text, 0, (i - 1) * 15
 
 {
   :reset,
   :print,
+  :render,
   :disable,
   :enable,
   :toggle,

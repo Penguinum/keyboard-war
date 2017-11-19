@@ -4,6 +4,7 @@ StatsPanel = require "UI.StatsPanel"
 StateManager = require "lib.StateManager"
 Moonshine = require "moonshine"
 BulletManager = require "lib.BulletManager"
+lovelog = require "lib.lovelog"
 
 Objects = {}
 Drawlayers = {}
@@ -59,6 +60,7 @@ Scene =
       object\update dt
 
   draw: =>
+    lovelog.reset!
     love.graphics.setCanvas @canvas
     colorize {20, 20, 20}, ->
       love.graphics.rectangle "fill", 0, 0, @canvas\getWidth!, @canvas\getHeight!
@@ -70,6 +72,9 @@ Scene =
     love.graphics.setCanvas!
     love.graphics.draw @canvas, const.hspace, const.vspace, 0, const.scaling, const.scaling
     @statsPanel\draw!
+    lovelog.print "Bullet count: ", BulletManager.count
+    lovelog.print "FPS: ", love.timer.getFPS!
+    colorize {255, 255, 255}, -> lovelog.render!
 
   keyreleased: (key, rawkey) =>
     if StateManager.PLAYABLE_STATE
@@ -78,6 +83,8 @@ Scene =
           object\keyreleased key
 
   keypressed: (key, rawkey) =>
+    if key == "f1"
+      lovelog.toggle!
     if key == "escape"
       Game.music\pauseCurrent!
       StateManager.switch {screen: "PauseMenu", pause: true}

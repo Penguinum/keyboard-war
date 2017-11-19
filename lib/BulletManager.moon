@@ -19,7 +19,9 @@ BulletManager =
   id: 0
   size: 0
   last: 0
+  count: 0
   addBullet: (b) =>
+    @count += 1
     layer = Layers[b.drawlayer]
     if not layer
       layer = newLayer b.drawlayer
@@ -34,6 +36,7 @@ BulletManager =
   removeBullet: (b) =>
     Bullet2LayerMap[b].bullets[b] = nil
     Bullet2LayerMap[b] = nil
+    @count -= 1
 
   removeAllBullets: =>
     for b in pairs(Bullet2LayerMap)
