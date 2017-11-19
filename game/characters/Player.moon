@@ -2,21 +2,13 @@ Vector = Vector
 Controller = Controller
 BasicCharacter = BasicCharacter
 pattern = Game.modules["patterns/test"]
+text2img = require "util.text2image"
 
 Player = derive(BasicCharacter)
-  states: {
-    default: {
-      textart: {
-        text: "(=^･ｪ･^=)"
-        font: "art"
-      }
-    }
-    concentrated: {
-      textart: {
-        text: "(=^‥^=)"
-        font: "art"
-      }
-    }
+  textart: {
+    text: "(=^･ｪ･^=)"
+    font: "art"
+    color: {100, 255, 100}
   }
   init: =>
     @state = "default"
@@ -24,7 +16,13 @@ Player = derive(BasicCharacter)
     @lives = 3
     @drawlayer = 5
     @speed = 100
+    @image = text2img @textart
+    @width = @image\getWidth!
+    @height = @image\getHeight!
     -- Game.ui.updatePlayerInfo {lives: @lives, bombs: @bombs}
+
+  draw: =>
+    love.graphics.draw @image, @pos.x, @pos.y, 0, 1, 1, @width / 2, @height / 2
 
   spawnPattern: =>
     -- TODO: spawn patterns after key released

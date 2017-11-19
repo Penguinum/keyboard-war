@@ -6,7 +6,7 @@ local graphics
 
 loadFont = (name) ->
   paths = graphics.fonts[name]
-  assert paths
+  assert paths, "no such font: " .. tostring(name)
   size = paths.size
   local font
   if not paths[1]
