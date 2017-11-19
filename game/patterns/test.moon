@@ -19,6 +19,7 @@ Pattern {
     pos: args.pos + Vector(0, -args.radius)\rotated(args.angle)
     angle: args.angle
     type: args.type
+    drawlayer: 7
     speed: 0
     update: (dt) =>
       @pos += Vector(0, -@speed)\rotated(@angle)

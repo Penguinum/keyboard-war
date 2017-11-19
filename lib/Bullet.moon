@@ -1,42 +1,9 @@
-lovelog = require "lib.lovelog"
 vector = require "hump.vector"
 colorize = require "util.colorize"
-signal = require "hump.signal"
 const = require "const"
+BulletManager = require "lib.BulletManager"
 HC = require "HCWorld"
 import graphics from love
-
-BulletManager =
-  id: 0
-  size: 0
-  last: 0
-  bullets: {}
-  addBullet: (b) =>
-    @size += 1
-    b.id = @id
-    b.hitbox.id = @id
-    @id += 1
-    @bullets[b] = true
-
-  removeBullet: (b) =>
-    @bullets[b] = nil
-    @size -= 1
-
-  update: (dt) =>
-    for b, _ in pairs @bullets
-      b\update dt
-
-  draw: () =>
-    lovelog.print "Bullet count: " .. @size
-    for b, _ in pairs @bullets
-      b\draw!
-
-  removeAllBullets: =>
-    for b, _ in pairs(@bullets)
-      b\remove!
-
-  removeBulletWithHitbox: (hbox) =>
-    hbox.bullet\remove!
 
 class Bullet
   new: (args) =>

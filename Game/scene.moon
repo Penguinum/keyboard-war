@@ -3,7 +3,7 @@ colorize = require "util.colorize"
 StatsPanel = require "UI.StatsPanel"
 StateManager = require "lib.StateManager"
 Moonshine = require "moonshine"
-import BulletManager from require "lib.Bullet"
+BulletManager = require "lib.BulletManager"
 
 Objects = {}
 Drawlayers = {}
@@ -12,8 +12,6 @@ KeypressSubscribers = {}
 
 FX = Moonshine(Moonshine.effects.glow)
 FX.glow.strength = 3
-
-frame = 1
 
 Scene =
   getWidth: => const.scene_width
@@ -56,7 +54,6 @@ Scene =
   update: (dt) =>
     for object in pairs Objects do
       object\update dt
-    BulletManager\update dt
 
   draw: =>
     love.graphics.setCanvas @canvas
@@ -67,11 +64,9 @@ Scene =
         layer = Drawlayers[id]
         for object in pairs layer
           object\draw!
-      BulletManager\draw!
     love.graphics.setCanvas!
     love.graphics.draw @canvas, const.hspace, const.vspace, 0, const.scaling, const.scaling
     @statsPanel\draw!
-    frame += 1
 
   keyreleased: (key, rawkey) =>
     if StateManager.PLAYABLE_STATE
