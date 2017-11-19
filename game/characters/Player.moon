@@ -5,6 +5,7 @@ pattern = Game.modules["patterns/test"]
 text2img = require "util.text2image"
 HC = require "HCWorld"
 config = require "config"
+import Bullet from require "lib.Bullet"
 
 Player = derive(BasicCharacter)
   textart: {
@@ -46,6 +47,9 @@ Player = derive(BasicCharacter)
     }
 
   update: (dt) =>
+    if not @alive
+      @alive = true
+      return
     vec = Vector 0
     if Controller.pressed "left" then
       vec.x = -1
@@ -83,6 +87,20 @@ Player = derive(BasicCharacter)
     dist = 20
     if Controller.pressed "slowdown"
       dist = 10
+    Bullet
+      pos: @pos + Vector(-dist, -10)
+      speed: 1500,
+      dir: Vector 0, -1
+      type: "good"
+      drawlayer: 6
+      color: {255, 255, 255}
+    Bullet
+      pos: @pos + Vector(dist, -10)
+      speed: 1500,
+      dir: Vector 0, -1
+      type: "good"
+      drawlayer: 6
+      color: {255, 255, 255}
 
   keypressed: (key) =>
     if Controller.getActionByKey(key) == "pattern4debug"

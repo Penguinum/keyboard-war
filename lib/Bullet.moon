@@ -12,6 +12,7 @@ class Bullet
     @speed = args.speed or 0
     @dir = args.dir or vector(0, 0)
     @char = args.char or "*"
+    @drawlayer = args.drawlayer
     @hitbox = HC\circle(@pos.x, @pos.y, @rad)
     if args.type == "good"
       r = @rad
@@ -97,6 +98,5 @@ class CircleBullet extends Bullet
 {
   :CircleBullet,
   :Bullet,
-  :BulletManager,
   :BulletConstructor
 }
