@@ -3,6 +3,8 @@ Controller = Controller
 BasicCharacter = BasicCharacter
 pattern = Game.modules["patterns/test"]
 text2img = require "util.text2image"
+HC = require "HCWorld"
+config = require "config"
 
 Player = derive(BasicCharacter)
   textart: {
@@ -11,17 +13,26 @@ Player = derive(BasicCharacter)
     color: {100, 255, 100}
   }
   init: =>
+    @pos = Vector 0, 0
     @state = "default"
     @slowspeed = 100
     @lives = 3
     @drawlayer = 5
-    @speed = 100
+    @speed = 300
     @image = text2img @textart
     @width = @image\getWidth!
     @height = @image\getHeight!
     -- Game.ui.updatePlayerInfo {lives: @lives, bombs: @bombs}
+    @hitbox = HC\circle @pos.x, @pos.y, 5
+
+  setPos: (pos) =>
+    @pos = pos
+    @hitbox\moveTo pos.x, pos.y
+
 
   draw: =>
+    if config.debug
+      @hitbox\draw!
     love.graphics.draw @image, @pos.x, @pos.y, 0, 1, 1, @width / 2, @height / 2
 
   spawnPattern: =>
@@ -57,16 +68,16 @@ Player = derive(BasicCharacter)
       speed = @speed
       @draw_hitbox = false
 
-    @pos = @pos + dt * speed * vec\normalized!
-    if @pos.x < 0
-      @pos.x = 0
-    elseif @pos.x > Game.scene.width
-      @pos.x = Game.scene.width
-    if @pos.y > Game.scene.height
-      @pos.y = Game.scene.height
-    elseif @pos.y < 0
-      @pos.y = 0
-    -- @hitbox\moveTo @pos.x, @pos.y
+    newpos = @pos + dt * speed * vec\normalized!
+    if newpos.x < 0
+      newpos.x = 0
+    elseif newpos.x > Game.scene.width
+      newpos.x = Game.scene.width
+    if newpos.y > Game.scene.height
+      newpos.y = Game.scene.height
+    elseif newpos.y < 0
+      newpos.y = 0
+    @setPos newpos
 
   shoot: =>
     dist = 20

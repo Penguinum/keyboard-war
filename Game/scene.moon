@@ -32,7 +32,10 @@ Scene =
 
   spawn: (obj, pos) =>
     if pos
-      obj.pos = pos
+      if obj.setPos
+        obj\setPos pos
+      else
+        obj.pos = pos
     Objects[obj] = true
     layer = obj.drawlayer
     if not Drawlayers[layer]

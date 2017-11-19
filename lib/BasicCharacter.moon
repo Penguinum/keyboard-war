@@ -5,9 +5,6 @@ Class
   setText: (t) =>
     @text = t
 
-  setPos: (x, y) =>
-    @pos = Vector(x, y)
-
   draw: =>
     love.graphics.printf "dummy text", @pos.x, @pos.y, 100, "center"
 
