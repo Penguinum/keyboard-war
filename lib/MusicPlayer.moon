@@ -8,7 +8,7 @@ STATE_FINAL = 4
 class Track
   new: (source) =>
     assert(type(source) == "string")
-    @source = love.audio.newSource(source)
+    @source = love.audio.newSource(source, "stream")
     @started = false
 
   set: (args) =>
