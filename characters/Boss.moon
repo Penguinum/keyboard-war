@@ -35,7 +35,7 @@ death = Mode{
       @text = ""
       if @circle_bullets_dt >= 0.2
         if not @exploded
-          love.audio.newSource("resources/sfx/boss_explosion.ogg")\play!
+          love.audio.newSource("resources/sfx/boss_explosion.ogg", "static")\play!
           MusicPlayer.sendEventToTag {tag: "Stage1", event: "stop", parameters: 4}
           @exploded = true
         @circle_bullets_dt = 0
